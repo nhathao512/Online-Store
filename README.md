@@ -7,13 +7,16 @@
 > __Cách Chạy Angular__
 <p>1. npm install -g yarn (này là tải yarn)</p>
 <p>2. yarn install (tải package)</p>
-<p>3. yarn start:dev (này là tải yarn)</p>
+<p>3.1 yarn start</p>
+
+http://localhost:4200/
+
+<p>3.2 yarn start:dev (nên dùng)</p>
 
 http://localhost:4300/
 
-> Chú ý
+> __Chú ý__
 <p> Mỗi lần pull lên nhớ xóa file node_modules</p>
-
 
 > __Mở phpMyadmin__
 
