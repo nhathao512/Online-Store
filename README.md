@@ -2,6 +2,8 @@
 
 ## Final-Java-ShopApp 
 
+<p>Được triển khai với Java Spring, Java Security, Angular, Docker</p>
+
 > __Cách Chạy Angular__
 <p>1. npm install -g yarn (này là tải yarn)</p>
 <p>2. yarn install (tải package)</p>
@@ -16,3 +18,4 @@ http://localhost:4300/
 > __Mở phpMyadmin__
 
 http://localhost:8100/
+
