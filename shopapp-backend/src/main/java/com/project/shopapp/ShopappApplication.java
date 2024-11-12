@@ -13,10 +13,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.project.shopapp.repositories")
 @ComponentScan(basePackages = {
 		"com.project.shopapp",
-//		"com.project.shopapp.services",
-//		"com.project.shopapp.components",
-//		"com.project.shopapp.configurations",
-//		"com.project.shopapp.filters"
+		"com.project.shopapp.services",
+		"com.project.shopapp.components",
+		"com.project.shopapp.configurations",
+		"com.project.shopapp.filters"
 })
 //@ImportAutoConfiguration(AopAutoConfiguration.class)
 //@SpringBootApplication(exclude = KafkaAutoConfiguration.class), disable in "application.yml"
@@ -45,6 +45,6 @@ docker-compose -f ./kafka-deployment.yaml up -d kafka-broker-01
 4.Những lần sau khi restart máy có thể bật lại các container:
 docker restart zookeeper-01 zookeeper-02 zookeeper-03
 đợi vài giây:
-docker restart kafka-broker-01 kafka-broker-02
+docker restart kafka-broker-01
 
 */
