@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.messages.default-locale",
+      "type": "java.lang.String",
+      "description": "Description for spring.messages.default-locale."
+  }
+] }

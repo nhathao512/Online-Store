@@ -53,8 +53,8 @@ public class WebSecurityConfig {
                                     //healthcheck
                                     String.format("%s/healthcheck/**", apiPrefix),
                                     //swagger
-                                    //"/v3/api-docs",
-                                    //"/v3/api-docs/**",
+                                    "/v3/api-docs",
+                                    "/v3/api-docs/**",
                                     "/api-docs",
                                     "/api-docs/**",
                                     "/swagger-resources",
