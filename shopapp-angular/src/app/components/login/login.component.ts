@@ -47,8 +47,8 @@ export class LoginComponent extends BaseComponent implements OnInit{
   password: string = '11223344';
 
   */
-  phoneNumber: string = '33445566';
-  password: string = '123456789';
+  phoneNumber: string = '';
+  password: string = '';
   showPassword: boolean = false;
 
   roles: Role[] = []; // Mảng roles
