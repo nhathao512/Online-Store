@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
     //SELECT * FROM users WHERE phoneNumber=?
     //query command
-    @Query("SELECT o FROM User o WHERE o.active = true AND (:keyword IS NULL OR :keyword = '' OR " +
+    @Query("SELECT o FROM User o WHERE (:keyword IS NULL OR :keyword = '' OR " +
             "o.fullName LIKE %:keyword% " +
             "OR o.address LIKE %:keyword% " +
             "OR o.phoneNumber LIKE %:keyword%) " +
