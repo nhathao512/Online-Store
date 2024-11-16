@@ -6,6 +6,7 @@ import { UserResponse } from '../../../responses/user/user.response';
 import { ApiResponse } from '../../../responses/api.response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../../base/base.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user.admin',    
@@ -99,32 +100,65 @@ export class UserAdminComponent extends BaseComponent implements OnInit{
     }
   
     toggleUserStatus(user: UserResponse) {
-      let confirmation: boolean;
       if (user.is_active) {
-        confirmation = window.confirm('Are you sure you want to block this user?');
-      } else {
-        confirmation = window.confirm('Are you sure you want to enable this user?');
-      }
-      
-      if (confirmation) {
-        const params = {
-          userId: user.id,
-          enable: !user.is_active
-        };
+        Swal.fire({
+          title: 'Are you sure?',
+          text: 'Are you sure you want to block this user?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, block user!',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const params = {
+              userId: user.id,
+              enable: !user.is_active
+            };
     
-        this.userService.toggleUserStatus(params).subscribe({
-          next: (response: any) => {
-            console.error('Block/unblock user successfully');
-            location.reload();
-          },
-          complete: () => {
-            // Handle complete event
-          },
-          error: (error: HttpErrorResponse) => {
-            debugger;
-            console.error(error?.error?.message ?? '');
-          } 
+            this.userService.toggleUserStatus(params).subscribe({
+              next: (response: any) => {
+                Swal.fire('Blocked!', 'The user has been blocked.', 'success');
+                location.reload();
+              },
+              error: (error: HttpErrorResponse) => {
+                console.error(error?.error?.message ?? '');
+                Swal.fire('Error', 'Failed to block the user.', 'error');
+              }
+            });
+          }
         });
-      }      
+      } else {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: 'Are you sure you want to enable this user?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#28a745',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, enable user!',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const params = {
+              userId: user.id,
+              enable: !user.is_active
+            };
+    
+            this.userService.toggleUserStatus(params).subscribe({
+              next: (response: any) => {
+                Swal.fire('Enabled!', 'The user has been enabled.', 'success');
+                location.reload();
+              },
+              error: (error: HttpErrorResponse) => {
+                console.error(error?.error?.message ?? '');
+                Swal.fire('Error', 'Failed to enable the user.', 'error');
+              }
+            });
+          }
+        });
+      }
     }
+    
 }
