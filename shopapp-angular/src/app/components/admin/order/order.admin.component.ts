@@ -43,24 +43,24 @@ export class OrderAdminComponent extends BaseComponent implements OnInit{
     debugger
     this.getAllOrders(this.keyword.trim(), this.currentPage, this.itemsPerPage);
   }
+  
   getAllOrders(keyword: string, page: number, limit: number) {
-    debugger
     this.orderService.getAllOrders(keyword, page, limit).subscribe({
       next: (apiResponse: ApiResponse) => {
-        debugger        
-        this.orders = apiResponse.data.orders;
-        this.totalPages = apiResponse.data.totalPages;
-        this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
-      },
-      complete: () => {
-        debugger;
+        if (apiResponse && apiResponse.data) {
+          console.log('API response data:', apiResponse.data);
+          this.orders = apiResponse.data; // Gán dữ liệu vào `orders`
+          this.totalPages = apiResponse.data.totalPages; // Gán số trang nếu có
+        } else {
+          console.error('Unexpected API response structure:', apiResponse);
+        }
       },
       error: (error: HttpErrorResponse) => {
-        debugger;
-        console.error(error?.error?.message ?? '');
+        console.error('Error fetching orders:', error.message);
       }
-    });    
+    });
   }
+  
   onPageChange(page: number) {
     debugger;
     this.currentPage = page < 0 ? 0 : page;
