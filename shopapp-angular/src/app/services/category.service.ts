@@ -13,38 +13,38 @@ import { ApiResponse } from '../responses/api.response';
 export class CategoryService {
 
   private apiBaseUrl = environment.apiBaseUrl;
+  private token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWJqZWN0IjoiMTEyMjMzNDQiLCJ1c2VySWQiOjMsInN1YiI6IjExMjIzMzQ0IiwiZXhwIjoxNzM0Mjc3MzMzfQ.QQffqT-JIIESyAJsu-7ZOf5hxx6aAZeH6e5Qfr8XlKM';
 
   constructor(private http: HttpClient) { }
-  getCategories(page: number, limit: number):Observable<ApiResponse> {
+
+  private getAuthHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+  }
+
+  getCategories(page: number, limit: number): Observable<ApiResponse> {
     const params = new HttpParams()
       .set('page', page.toString())
-      .set('limit', limit.toString());           
-      return this.http.get<ApiResponse>(`${environment.apiBaseUrl}/categories`, { params });           
+      .set('limit', limit.toString());
+    return this.http.get<ApiResponse>(`${this.apiBaseUrl}/categories`, { params, headers: this.getAuthHeaders() });
   }
+
   getDetailCategory(id: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiBaseUrl}/categories/${id}`);
+    return this.http.get<ApiResponse>(`${this.apiBaseUrl}/categories/${id}`, { headers: this.getAuthHeaders() });
   }
+
   deleteCategory(id: number): Observable<ApiResponse> {
-    debugger
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWJqZWN0IjoiMTEyMjMzNDQiLCJ1c2VySWQiOjMsInN1YiI6IjExMjIzMzQ0IiwiZXhwIjoxNzM0Mjc3MzMzfQ.QQffqT-JIIESyAJsu-7ZOf5hxx6aAZeH6e5Qfr8XlKM';
-    const headers = new HttpHeaders({
-      'Authorization' : `Bearer ${token}`,
-    })
-    return this.http.delete<ApiResponse>(`${this.apiBaseUrl}/categories/${id}`, {headers});
+    debugger;
+    return this.http.delete<ApiResponse>(`${this.apiBaseUrl}/categories/${id}`, { headers: this.getAuthHeaders() });
   }
+
   updateCategory(id: number, updatedCategory: UpdateCategoryDTO): Observable<ApiResponse> {
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWJqZWN0IjoiMTEyMjMzNDQiLCJ1c2VySWQiOjMsInN1YiI6IjExMjIzMzQ0IiwiZXhwIjoxNzM0Mjc3MzMzfQ.QQffqT-JIIESyAJsu-7ZOf5hxx6aAZeH6e5Qfr8XlKM';
-    const headers = new HttpHeaders({
-      'Authorization' : `Bearer ${token}`,
-    })
-    return this.http.put<ApiResponse>(`${this.apiBaseUrl}/categories/${id}`, updatedCategory, {headers});
-  }  
+    return this.http.put<ApiResponse>(`${this.apiBaseUrl}/categories/${id}`, updatedCategory, { headers: this.getAuthHeaders() });
+  }
+
   insertCategory(insertCategoryDTO: InsertCategoryDTO): Observable<ApiResponse> {
     // Add a new category
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWJqZWN0IjoiMTEyMjMzNDQiLCJ1c2VySWQiOjMsInN1YiI6IjExMjIzMzQ0IiwiZXhwIjoxNzM0Mjc3MzMzfQ.QQffqT-JIIESyAJsu-7ZOf5hxx6aAZeH6e5Qfr8XlKM';
-    const headers = new HttpHeaders({
-      'Authorization' : `Bearer ${token}`,
-    })
-    return this.http.post<ApiResponse>(`${this.apiBaseUrl}/categories`, insertCategoryDTO, {headers});
+    return this.http.post<ApiResponse>(`${this.apiBaseUrl}/categories`, insertCategoryDTO, { headers: this.getAuthHeaders() });
   }
 }
