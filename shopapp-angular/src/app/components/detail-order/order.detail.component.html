@@ -40,7 +40,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th scope="col" class="text-start">Sản phẩm</th>
+                            <th scope="col" class="text-center">Sản phẩm</th>
                             <th scope="col">Số lượng</th>
                             <th scope="col">Đơn giá</th>
                             <th scope="col">Tổng giá</th>
@@ -55,15 +55,15 @@
                                         <span class="product-name">{{ item.product_name }}</span>
                                     </div>
                                 </td>
-                                <td>{{ item.number_of_products || null }}</td>
-                                <td>{{ item.price | number:'1.2-2' }}</td>
-                                <td>{{ item.total_money | number:'1.2-2' }}</td>
+                                <td>{{ item.number_of_products || 10 }}</td>
+                                <td>${{ item.price | number:'1.2-2' }}</td>
+                                <td>${{ item.number_of_products * item.price | number:'1.2-2' }}</td>
                             </tr>
                         }                        
                     </tbody>
                 </table>
                 <div class="text-start mt-3">
-                    <h4 class="header-text text-end">Tổng giá: {{ orderResponse.total_money | number:'1.2-2' }}</h4>
+                    <h4 class="header-text text-end">Tổng giá: ${{ orderResponse.total_money | number:'1.2-2' }}</h4>
                 </div>            
             </div>
         </div>    

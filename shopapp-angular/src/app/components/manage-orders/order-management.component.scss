@@ -1,0 +1,22 @@
+/* Custom Styles */
+.container {
+    max-width: 1200px;
+  }
+  
+  table th, table td {
+    text-align: center;
+  }
+  
+  .modal-body {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .img-thumbnail {
+    object-fit: cover;
+  }
+  
+  .badge {
+    font-size: 0.9rem;
+  }
+  

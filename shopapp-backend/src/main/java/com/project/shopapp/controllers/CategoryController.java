@@ -112,5 +112,25 @@ public class CategoryController {
                         .message("Delete category successfully")
                         .build());
     }
+
+    @GetMapping("/exists")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ResponseObject> checkCategoryExists(@RequestParam String name) {
+        boolean exists = categoryService.checkCategoryExists(name);
+
+        if (exists) {
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .message("Category exists")
+                    .status(HttpStatus.OK)
+                    .data(null)
+                    .build());
+        } else {
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .message("Category does not exist")
+                    .status(HttpStatus.OK)
+                    .data(null)
+                    .build());
+        }
+    }
 }
 
