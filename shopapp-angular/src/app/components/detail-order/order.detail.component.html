@@ -47,15 +47,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for(item of orderResponse.order_details; track item.product.name) {
+                        @for(item of orderResponse.order_details; track item.id) {
                             <tr>
                                 <td>
                                     <div class="product-info">
-                                        <img [src]="item.product.thumbnail" alt="Product Image" class="product-image">
-                                        <span class="product-name">{{ item.product.name }}</span>
+                                        <img [src]="item.thumbnail" alt="Product Image" class="product-image">
+                                        <span class="product-name">{{ item.name }}</span>
                                     </div>
                                 </td>
-                                <td>{{ item.number_of_products }}</td>
+                                <td>{{ item.number_of_products || null }}</td>
                                 <td>{{ item.price | number:'1.2-2' }}</td>
                                 <td>{{ item.total_money | number:'1.2-2' }}</td>
                             </tr>

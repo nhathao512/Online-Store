@@ -19,7 +19,8 @@ import { BaseComponent } from '../base/base.component';
     CommonModule
   ]
 })
-export class OrderDetailComponent extends BaseComponent implements OnInit {  
+export class OrderDetailComponent extends BaseComponent implements OnInit {
+  orderId: number = 0;  
   orderResponse: OrderResponse = {
     id: 0, // Hoặc bất kỳ giá trị số nào bạn muốn
     user_id: 0,
@@ -44,12 +45,13 @@ export class OrderDetailComponent extends BaseComponent implements OnInit {
   }
   
   getOrderDetails(): void {
-    debugger
-    const orderId = Number(this.activatedRoute.snapshot.paramMap.get('orderId'));
-    this.orderService.getOrderById(orderId).subscribe({
+    // debugger
+    this.orderId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.orderService.getOrderById(this.orderId).subscribe({
       next: (apiResponse: ApiResponse) => {        
-        debugger;   
-        const response = apiResponse.data    
+        // debugger;   
+        const response = apiResponse.data   
+        console.log(response); 
         this.orderResponse.id = response.id;
         this.orderResponse.user_id = response.user_id;
         this.orderResponse.fullname = response.fullname;
@@ -62,30 +64,42 @@ export class OrderDetailComponent extends BaseComponent implements OnInit {
           response.order_date[1] - 1, 
           response.order_date[2]
         );        
-        
+        console.log(response)
         this.orderResponse.order_details = response.order_details
-          .map((order_detail: OrderDetail) => {
-          order_detail.product.thumbnail = `${environment.apiBaseUrl}/products/images/${order_detail.product.thumbnail}`;
+        .map((order_detail: any) => {
+          console.log(order_detail)
+          if (order_detail.product_name && order_detail.thumbnail) {
+            console.log("Yes")
+            
+            order_detail.thumbnail = `${environment.apiBaseUrl}/products/images/${order_detail.thumbnail}`;
+          } else {
+            console.log("No")
+            // Xử lý trường hợp product hoặc thumbnail không tồn tại
+            order_detail.product = order_detail.product || {};
+            order_detail.product.thumbnail = 'default-image-path'; // Đường dẫn hình ảnh mặc định nếu thumbnail không tồn tại
+          }
+          order_detail.number_of_products = order_detail.numberOfProducts;
+          order_detail.total_money = order_detail.totalMoney;
           return order_detail;
-        });        
+        });
         this.orderResponse.payment_method = response.payment_method;
-        this.orderResponse.shipping_date = new Date(
-          response.shipping_date[0], 
-          response.shipping_date[1] - 1, 
-          response.shipping_date[2]
-        );
-        
+        if (response.shipping_date) {
+          this.orderResponse.shipping_date = new Date(
+            response.shipping_date[0],
+            response.shipping_date[1] - 1,
+            response.shipping_date[2]
+          );
+        }
         this.orderResponse.shipping_method = response.shipping_method;
-        
         this.orderResponse.status = response.status;
-        this.orderResponse.total_money = response.total_money;
+        // debugger
       },
       complete: () => {
-        debugger;        
+        // debugger;        
       },
       error: (error: HttpErrorResponse) => {
-        debugger;
-        console.error(error?.error?.message ?? '');
+        // debugger;
+        console.error(error);
       } 
     });
   }

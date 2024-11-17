@@ -15,7 +15,7 @@ export class CartService {
     // Lấy dữ liệu giỏ hàng từ localStorage khi khởi tạo service            
     this.refreshCart()
   }
-  public  refreshCart(){
+  public refreshCart(){
     const storedCart = this.localStorage?.getItem(this.getCartKey());
     if (storedCart) {
       this.cart = new Map(JSON.parse(storedCart));      
@@ -26,13 +26,13 @@ export class CartService {
   private getCartKey():string {    
     const userResponseJSON = this.localStorage?.getItem('user'); 
     const userResponse = JSON.parse(userResponseJSON!);  
-    debugger
+    //debugger
     return `cart:${userResponse?.id ?? ''}`;
 
   }
 
   addToCart(productId: number, quantity: number = 1): void {
-    debugger
+    //debugger
     if (this.cart.has(productId)) {
       // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng lên `quantity`
       this.cart.set(productId, this.cart.get(productId)! + quantity);
@@ -49,7 +49,7 @@ export class CartService {
   }
   // Lưu trữ giỏ hàng vào localStorage
   private saveCartToLocalStorage(): void {
-    debugger
+    //debugger
     this.localStorage?.setItem(this.getCartKey(), JSON.stringify(Array.from(this.cart.entries())));
   }  
   setCart(cart : Map<number, number>) {
