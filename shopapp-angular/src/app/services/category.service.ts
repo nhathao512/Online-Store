@@ -23,6 +23,12 @@ export class CategoryService {
     });
   }
 
+  checkCategoryExists(name: string) {
+    return this.http.get<ApiResponse>(`${this.apiBaseUrl}/categories/exists?name=${name}`, {
+      headers: this.getAuthHeaders()
+    });
+  }  
+  
   getCategories(page: number, limit: number): Observable<ApiResponse> {
     const params = new HttpParams()
       .set('page', page.toString())

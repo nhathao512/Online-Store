@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserResponse } from '../../responses/user/user.response';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RouterModule } from '@angular/router';  
+import { RouterModule } from '@angular/router';
 import { BaseComponent } from '../base/base.component';
 
 @Component({
@@ -10,7 +10,7 @@ import { BaseComponent } from '../base/base.component';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [    
+  imports: [
     CommonModule,
     NgbModule,
     RouterModule
@@ -31,7 +31,6 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   }
 
   handleItemClick(index: number): void {
-    //console.error(`Clicked on "${index}"`);
     if (index === 0) {
       debugger
       this.router.navigate(['/user-profile']);
@@ -46,8 +45,9 @@ export class HeaderComponent extends BaseComponent implements OnInit {
       this.tokenService.removeToken();
       this.userResponse = this.userService.getUserResponseFromLocalStorage();
     }
-    this.isPopoverOpen = false; // Close the popover after clicking an item    
-  }
+    this.isPopoverOpen = false; // Close the popover after clicking an item 
+}
+
 
   setActiveNavItem(index: number) {
     this.activeNavItem = index;

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ApiResponse } from '../../../responses/api.response';
 import {  HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../../base/base.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-order-admin',
@@ -43,7 +44,7 @@ export class OrderAdminComponent extends BaseComponent implements OnInit{
     debugger
     this.getAllOrders(this.keyword.trim(), this.currentPage, this.itemsPerPage);
   }
-  
+
   getAllOrders(keyword: string, page: number, limit: number) {
     this.orderService.getAllOrders(keyword, page, limit).subscribe({
       next: (apiResponse: ApiResponse) => {
@@ -69,26 +70,32 @@ export class OrderAdminComponent extends BaseComponent implements OnInit{
   }
   
 
-  deleteOrder(id:number) {
-    const confirmation = window
-      .confirm('Are you sure you want to delete this order?');
-    if (confirmation) {
-      debugger
-      this.orderService.deleteOrder(id).subscribe({
-        next: (response: ApiResponse) => {
-          debugger 
-          location.reload();          
-        },
-        complete: () => {
-          debugger;          
-        },
-        error: (error: HttpErrorResponse) => {
-          debugger;
-          console.error(error?.error?.message ?? '');
-        }
-      });    
-    }
+  deleteOrder(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you really want to delete this order?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.orderService.deleteOrder(id).subscribe({
+          next: (response: ApiResponse) => {
+            Swal.fire('Deleted!', 'The order has been deleted successfully.', 'success');
+            this.getAllOrders(this.keyword, this.currentPage, this.itemsPerPage); // Cập nhật lại danh sách
+          },
+          error: (error: HttpErrorResponse) => {
+            console.error(error?.error?.message ?? '');
+            Swal.fire('Error', 'Failed to delete the order.', 'error');
+          }
+        });
+      }
+    });
   }
+  
   viewDetails(order:OrderResponse) {
     debugger
     this.router.navigate(['/admin/orders', order.id]);

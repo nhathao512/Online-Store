@@ -1,11 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Category } from '../../../models/category';
 import { ApiResponse } from '../../../responses/api.response';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../../base/base.component';
+import Swal from 'sweetalert2'; // Import SweetAlert2 for popups
 
 @Component({
   selector: 'app-category-admin',
@@ -25,51 +25,81 @@ export class CategoryAdminComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.getCategories(0, 100);
   }
-  getCategories(page: number, limit: number) {
+
+  // Fetch categories with SweetAlert2 success/error feedback
+   // Hàm gọi API để lấy danh sách category
+   getCategories(page: number, limit: number) {
     this.categoryService.getCategories(page, limit).subscribe({
       next: (apiResponse: ApiResponse) => {
-        debugger;
         this.categories = apiResponse.data;
+
+        // Sau khi lấy dữ liệu, sắp xếp danh mục theo thứ tự ID từ thấp đến cao
+        this.sortCategories();
       },
-      complete: () => {
-        debugger;
-      },
+    
       error: (error: HttpErrorResponse) => {
-        debugger;
+        // Hiển thị thông báo lỗi khi không thể tải danh mục
+        Swal.fire({
+          icon: 'error',
+          title: 'Lỗi',
+          text: 'Không thể tải danh mục, vui lòng thử lại.',
+        });
         console.error(error?.error?.message ?? '');
       }
     });
   }
-  insertCategory() {
-    debugger
-    // Điều hướng đến trang detail-category với categoryId là tham số
-    this.router.navigate(['/admin/categories/insert']);
+
+  // Hàm để sắp xếp danh mục theo ID từ thấp đến cao
+  sortCategories() {
+    this.categories.sort((a, b) => a.id - b.id);  // Sắp xếp theo ID từ thấp đến cao
   }
 
-  // Hàm xử lý sự kiện khi sản phẩm được bấm vào
-  updateCategory(categoryId: number) {
-    debugger
-    this.router.navigate(['/admin/categories/update', categoryId]);
+  // Navigate to insert category page with SweetAlert2 info popup
+  insertCategory() {
+    this.router.navigate(['/admin/categories/insert']).then(() => {
+    });
   }
+
+  // Navigate to update category page with SweetAlert2 info popup
+  updateCategory(categoryId: number) {
+    this.router.navigate(['/admin/categories/update', categoryId]).then(() => {
+    });
+  }
+
+  // Confirm and delete category with SweetAlert2 confirmation dialog
   deleteCategory(category: Category) {
-    const confirmation = window
-      .confirm('Are you sure you want to delete this category?');
-    if (confirmation) {
-      debugger
-      this.categoryService.deleteCategory(category.id).subscribe({
-        next: (apiResponse: ApiResponse) => {
-          debugger
-          console.error('Xóa thành công')
-          location.reload();
-        },
-        complete: () => {
-          debugger;
-        },
-        error: (error: HttpErrorResponse) => {
-          debugger;
-          console.error(error?.error?.message ?? '');
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Bạn có chắc chắn muốn xóa danh mục này?',
+      text: 'Hành động này không thể hoàn tác!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Đúng, xóa!',
+      cancelButtonText: 'Hủy',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.categoryService.deleteCategory(category.id).subscribe({
+          next: (apiResponse: ApiResponse) => {
+            // Success notification after deleting the category
+            Swal.fire({
+              icon: 'success',
+              title: 'Thành công',
+              text: 'Danh mục đã được xóa thành công.',
+            }).then(() => {
+              location.reload(); // Reload page to reflect the changes
+            });
+          },
+          error: (error: HttpErrorResponse) => {
+            // Error notification for failed deletion
+            Swal.fire({
+              icon: 'error',
+              title: 'Lỗi',
+              text: 'Xóa danh mục thất bại, vui lòng thử lại.',
+            });
+            console.error(error?.error?.message ?? '');
+          }
+        });
+      }
+    });
   }
 }

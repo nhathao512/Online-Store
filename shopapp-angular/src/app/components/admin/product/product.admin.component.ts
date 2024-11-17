@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ApiResponse } from '../../../responses/api.response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../../base/base.component';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -49,6 +50,7 @@ export class ProductAdminComponent extends BaseComponent implements OnInit {
       debugger
       this.getProducts(this.keyword.trim(), this.selectedCategoryId, this.currentPage, this.itemsPerPage);
     }
+    
     getProducts(keyword: string, selectedCategoryId: number, page: number, limit: number) {
       debugger
       this.productService.getProducts(keyword, selectedCategoryId, page, limit).subscribe({
@@ -93,24 +95,42 @@ export class ProductAdminComponent extends BaseComponent implements OnInit {
       // Điều hướng đến trang detail-product với productId là tham số
       this.router.navigate(['/admin/products/update', productId]);
     }  
-    deleteProduct(product: Product) {      
-      const confirmation = window.confirm('Are you sure you want to delete this product?');
-      if (confirmation) {
-        debugger
-        this.productService.deleteProduct(product.id).subscribe({
-          next: (apiResponse: ApiResponse) => {
-            debugger 
-            console.error('Xóa thành công')
-            location.reload();          
-          },
-          complete: () => {
-            debugger;          
-          },
-          error: (error: HttpErrorResponse) => {
-            debugger;
-            console.error(error?.error?.message ?? '');
-          }
-        });  
-      }      
-    }      
+    deleteProduct(product: Product) {
+      Swal.fire({
+        title: 'Xác nhận',
+        text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Xóa',
+        cancelButtonText: 'Hủy'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          debugger;
+          this.productService.deleteProduct(product.id).subscribe({
+            next: (apiResponse: ApiResponse) => {
+              debugger;
+              Swal.fire({
+                icon: 'success',
+                title: 'Thành công',
+                text: 'Xóa sản phẩm thành công.'
+              }).then(() => {
+                location.reload(); // Reload lại trang sau khi xóa thành công
+              });
+            },
+            complete: () => {
+              debugger;
+            },
+            error: (error: HttpErrorResponse) => {
+              debugger;
+              Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: `Xóa sản phẩm thất bại: ${error?.error?.message ?? 'Đã xảy ra lỗi'}`,
+              });
+            }
+          });
+        }
+      });
+    }
+          
 }
