@@ -37,7 +37,7 @@
                     <li class="nav-item">
                         @if(userResponse) {                          
                             <ng-container
-                              ngbPopover="Tài khoản của tôi,Đơn mua,Đăng xuất"
+                              ngbPopover="Tài khoản của tôi,Chi tiết đơn hàng đã đặt,Đăng xuất"
                               popoverTitle="User Actions"
                               triggers="click"
                               [placement]="'bottom'"
@@ -54,7 +54,7 @@
                                   <a class="popover-item" 
                                       (click)="handleItemClick(0)">Tài khoản của tôi</a>
                                   <a class="popover-item" 
-                                      (click)="handleItemClick(1)">Đơn mua</a>
+                                      (click)="handleItemClick(1)">Chi tiết đơn hàng đã đặt</a>
                                   <a class="popover-item" 
                                       (click)="handleItemClick(2)">Đăng xuất</a>
                                 </div>

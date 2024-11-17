@@ -51,7 +51,7 @@
                         @if(orderForm.get('phone_number')!.invalid 
                             && orderForm.get('phone_number')!.touched) {
                             <div class="invalid-feedback">
-                                Số điện thoại là trường bắt buộc và ít nhất 6 ký tự.
+                                Số điện thoại là trường bắt buộc và ít nhất 10 ký tự.
                             </div>
                         }                        
                 </div>
@@ -114,7 +114,7 @@
                         <td>
                           <div class="product-quantity">
                             <div class="border-wrapper">
-                              <button (click)="decreaseQuantity(i)">-</button>
+                                <button (click)="decreaseQuantity(i)">-</button>
                               {{ item.quantity }}
                               <button (click)="increaseQuantity(i)">+</button>
                             </div>

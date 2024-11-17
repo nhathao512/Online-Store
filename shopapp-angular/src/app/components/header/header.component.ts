@@ -36,10 +36,15 @@ export class HeaderComponent extends BaseComponent implements OnInit {
       debugger
       this.router.navigate(['/user-profile']);
     }
-    else if(index === 1){
-      debugger
-      const orderId = '45'; // Replace with the actual order ID logic if needed
-      this.router.navigate([`/orders/${orderId}`]);
+    else if (index === 1) {
+      // Lấy `orderId` của đơn hàng mới nhất từ dịch vụ hoặc localStorage
+      const latestOrderId = localStorage.getItem('latestOrderId'); // Hoặc gọi từ `orderService` nếu cần
+  
+      if (latestOrderId) {
+        this.router.navigate([`/orders/${latestOrderId}`]);
+      } else {
+        console.error('Không tìm thấy đơn hàng mới nhất');
+      }
     } 
     else if (index === 2) {
       this.userService.removeUserFromLocalStorage();

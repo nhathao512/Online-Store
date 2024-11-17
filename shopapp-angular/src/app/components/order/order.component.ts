@@ -84,8 +84,7 @@ export class OrderComponent extends BaseComponent implements OnInit {
         const products: Product[] = apiResponse.data;
         this.cartItems = productIds.map((productId) => {
           const product = products.find((p) => p.id === productId);
-          if (product) {
-            product.thumbnail = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
+          if (product) {product.thumbnail = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
           }
           return {
             product: product!,
@@ -134,6 +133,9 @@ export class OrderComponent extends BaseComponent implements OnInit {
   
     this.orderService.placeOrder(this.orderData).subscribe({
       next: (response: ApiResponse) => {
+        const orderId = response.data.id; // Đảm bảo API trả về id của đơn hàng
+        localStorage.setItem('latestOrderId', orderId.toString());
+        console.log('Đơn hàng đã được lưu với ID:', orderId);
         Swal.fire({
           icon: 'success',
           title: 'Thành công',
