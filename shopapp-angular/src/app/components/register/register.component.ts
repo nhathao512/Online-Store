@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RegisterDTO } from '../../dtos/user/register.dto';
 import { CommonModule } from '@angular/common';
@@ -22,7 +22,7 @@ import { BaseComponent } from '../base/base.component';
   ]
 })
 export class RegisterComponent extends BaseComponent {
-  @ViewChild('registerForm') registerForm!: NgForm;
+  readonly registerForm = viewChild.required<NgForm>('registerForm');
 
   phoneNumber: string = '';
   password: string = '';
@@ -40,7 +40,7 @@ export class RegisterComponent extends BaseComponent {
   }
 
   register() {
-    if (this.registerForm.valid) {
+    if (this.registerForm().valid) {
       const registerDTO: RegisterDTO = {
         fullname: this.fullName,
         phone_number: this.phoneNumber,
@@ -77,9 +77,9 @@ export class RegisterComponent extends BaseComponent {
 
   checkPasswordsMatch() {
     if (this.password !== this.retypePassword) {
-      this.registerForm.form.controls['retypePassword'].setErrors({ 'passwordMismatch': true });
+      this.registerForm().form.controls['retypePassword'].setErrors({ 'passwordMismatch': true });
     } else {
-      this.registerForm.form.controls['retypePassword'].setErrors(null);
+      this.registerForm().form.controls['retypePassword'].setErrors(null);
     }
   }
   
@@ -88,9 +88,9 @@ export class RegisterComponent extends BaseComponent {
       const today = new Date();
       const birthDate = new Date(this.dateOfBirth);
       if (birthDate > today) {
-        this.registerForm.form.controls['dateOfBirth'].setErrors({ 'futureDate': true });
+        this.registerForm().form.controls['dateOfBirth'].setErrors({ 'futureDate': true });
       } else {
-        this.registerForm.form.controls['dateOfBirth'].setErrors(null);
+        this.registerForm().form.controls['dateOfBirth'].setErrors(null);
       }
     }
   }
@@ -104,15 +104,15 @@ export class RegisterComponent extends BaseComponent {
         age--;
       }
       else if (birthDate > today) {
-        this.registerForm.form.controls['dateOfBirth'].setErrors({ 'futureDate': true });
+        this.registerForm().form.controls['dateOfBirth'].setErrors({ 'futureDate': true });
       } 
       // Xóa lỗi nếu hợp lệ
       else {
-        this.registerForm.form.controls['dateOfBirth'].setErrors(null);
+        this.registerForm().form.controls['dateOfBirth'].setErrors(null);
       }
     } else {
       // Đặt lỗi nếu trường ngày tháng năm sinh để trống
-      this.registerForm.form.controls['dateOfBirth'].setErrors({ 'required': true });
+      this.registerForm().form.controls['dateOfBirth'].setErrors({ 'required': true });
     }
   }
 }
