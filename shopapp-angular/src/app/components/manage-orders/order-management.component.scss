@@ -1,22 +1,96 @@
-/* Custom Styles */
+/* Thêm CSS cho các màu sắc, nút, bảng */
 .container {
-    max-width: 1200px;
+    margin-top: 20px;
   }
   
-  table th, table td {
-    text-align: center;
+  h2 {
+    color: #333;
+    font-weight: bold;
   }
   
-  .modal-body {
-    max-height: 400px;
-    overflow-y: auto;
+  .table {
+    margin-top: 20px;
+    color: #333;
   }
   
-  .img-thumbnail {
-    object-fit: cover;
+  .table-striped {
+    border-radius: 8px;
+  }
+  
+  .table thead th {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  .table tbody td {
+    padding: 12px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
   }
   
   .badge {
-    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  
+  .badge-warning {
+    background-color: #ffc107;
+  }
+  
+  .badge-success {
+    background-color: #28a745;
+  }
+  
+  .badge-danger {
+    background-color: #dc3545;
+  }
+
+  .badge-info {
+    background-color: #0df0e9;
+  }
+
+  .badge-primary {
+    background-color: #3328d3;
+  }
+  
+  .btn-info {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-info:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+
+  
+  /* Modal */
+  .modal-header {
+    background-color: #f1f1f1;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .modal-footer {
+    background-color: #f8f9fa;
+  }
+  
+  .modal-content {
+    border-radius: 8px;
+  }
+  
+  /* Thêm style cho các button */
+  .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 4px;
+  }
+  
+  .btn-close {
+    color: #000;
   }
   

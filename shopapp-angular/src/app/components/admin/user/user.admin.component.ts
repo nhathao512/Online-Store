@@ -84,20 +84,42 @@ export class UserAdminComponent extends BaseComponent implements OnInit{
       this.router.navigate(['/admin/users/update', userId]);
     }  
     resetPassword(userId: number) {
-      this.userService.resetPassword(userId).subscribe({
-        next: (apiResponse: ApiResponse) => {
-          console.error('Block/unblock user successfully');
-          //location.reload();
-        },
-        complete: () => {
-          // Handle complete event
-        },
-        error: (error: HttpErrorResponse) => {
-          debugger;
-          console.error(error?.error?.message ?? '');
-        } 
+      // Hiển thị popup xác nhận trước khi đặt lại mật khẩu
+      Swal.fire({
+        title: 'Xác nhận đặt lại mật khẩu',
+        text: 'Bạn có chắc chắn muốn đặt lại mật khẩu cho người dùng này không?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Đúng, đặt lại!',
+        cancelButtonText: 'Hủy'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Gọi API để đặt lại mật khẩu nếu người dùng xác nhận
+          this.userService.resetPassword(userId).subscribe({
+            next: (apiResponse: ApiResponse) => {
+              // Hiển thị mật khẩu mới từ phản hồi API
+              const newPassword = apiResponse.data;
+              Swal.fire({
+                icon: 'success',
+                title: 'Thành công',
+                html: `Mật khẩu đã được đặt lại thành công. <br><strong>Mật khẩu mới:</strong> ${newPassword}`,
+              });
+            },
+            error: (error: HttpErrorResponse) => {
+              console.error(error?.error?.message ?? '');
+              Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Đặt lại mật khẩu không thành công, vui lòng thử lại.',
+              });
+            }
+          });
+        }
       });
     }
+    
   
     toggleUserStatus(user: UserResponse) {
       if (user.is_active) {

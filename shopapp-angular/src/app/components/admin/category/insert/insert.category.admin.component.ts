@@ -32,6 +32,16 @@ export class InsertCategoryAdminComponent extends BaseComponent implements OnIni
 
   // Method to insert a new category
   insertCategory() {
+    // Kiểm tra nếu tên danh mục trống hoặc không hợp lệ
+    if (!this.insertCategoryDTO.name || this.insertCategoryDTO.name.trim() === '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: 'Tên danh mục không được để trống. Vui lòng nhập tên danh mục.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
     // Trước tiên, kiểm tra nếu danh mục đã tồn tại
     this.categoryService.checkCategoryExists(this.insertCategoryDTO.name).subscribe({
       next: (exists) => {
@@ -39,7 +49,7 @@ export class InsertCategoryAdminComponent extends BaseComponent implements OnIni
         console.log('checkCategoryExists response:', exists);
   
         // Kiểm tra nếu danh mục tồn tại hay không
-        if (exists.message == "Category exists") {
+        if (exists.message === "Category exists") {
           // Nếu danh mục đã tồn tại, hiển thị popup lỗi
           Swal.fire({
             icon: 'error',

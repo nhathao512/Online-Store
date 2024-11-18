@@ -63,6 +63,53 @@ export class InsertProductAdminComponent extends BaseComponent implements OnInit
   }
 
   insertProduct() {
+    // Kiểm tra nếu các trường bắt buộc không có giá trị hoặc không hợp lệ
+    if (!this.insertProductDTO.name || this.insertProductDTO.name.trim() === '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: 'Tên sản phẩm không được để trống. Vui lòng nhập tên sản phẩm.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
+    if (this.insertProductDTO.price <= 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: 'Giá sản phẩm phải lớn hơn 0. Vui lòng nhập giá hợp lệ.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
+    if (!this.insertProductDTO.description || this.insertProductDTO.description.trim() === '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: 'Mô tả sản phẩm không được để trống. Vui lòng nhập mô tả.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
+    if (!this.insertProductDTO.category_id || this.insertProductDTO.category_id <= 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: 'Danh mục sản phẩm không hợp lệ. Vui lòng chọn danh mục.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
+    if (this.insertProductDTO.images.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: 'Vui lòng chọn ít nhất một ảnh cho sản phẩm.',
+      });
+      return; // Dừng hàm nếu chưa chọn ảnh
+    }
+  
+    // Nếu các trường hợp trên đều hợp lệ, thực hiện thêm sản phẩm
     this.productService.insertProduct(this.insertProductDTO).subscribe({
       next: (apiResponse: ApiResponse) => {
         Swal.fire({
@@ -103,5 +150,5 @@ export class InsertProductAdminComponent extends BaseComponent implements OnInit
         });
       }
     });
-  }
+  }  
 }
