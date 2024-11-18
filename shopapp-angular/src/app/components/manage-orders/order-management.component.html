@@ -1,18 +1,18 @@
 <app-header></app-header>
 <div class="container mt-5">
-    <h2 class="text-center mb-4" style="font-family: 'Arial', sans-serif; color: #4CAF50;">Quản Lý Đơn Hàng</h2>
+    <h2 class="text-center mb-4" style="font-family: 'Arial', sans-serif; color: #000000;">Order Management</h2>
     <div *ngIf="orders.length > 0" class="table-responsive">
         <table class="table table-striped table-hover" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
             <thead class="table-dark">
                 <tr>
-                    <th>Họ và Tên</th>
-                    <th>Điện Thoại</th>
+                    <th>Full Name</th>
+                    <th>Phone Number</th>
                     <th>Email</th>
-                    <th>Địa Chỉ</th>
-                    <th>Ngày Đặt Hàng</th>
-                    <th>Tổng Tiền</th>
-                    <th>Trạng Thái</th>
-                    <th>Chi Tiết</th>
+                    <th>Address</th>
+                    <th>Order Date</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Details</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,7 +21,7 @@
                     <td>{{ order.phone_number }}</td>
                     <td>{{ order.email }}</td>
                     <td>{{ order.address }}</td>
-                    <td>{{ order.order_date | date:'dd/MM/yyyy, HH:mm' }}</td>
+                    <td>{{ order.order_date | date:'short' }}</td>
                     <td>{{ order.total_money | currency }}</td>
                     <td>
                         <span class="badge" [ngClass]="{
@@ -35,21 +35,21 @@
                         </span>
                     </td>
                     <td>
-                        <a href='http://localhost:4300/orders/{{order.id}}' class="btn btn-info" data-bs-toggle="modal" [attr.data-bs-target]="'#orderModal' + order.id" style="border-radius: 20px; padding: 8px 15px;">Xem Chi Tiết</a>
+                        <a href='http://localhost:4300/orders/{{order.id}}' class="btn btn-info" data-bs-toggle="modal" [attr.data-bs-target]="'#orderModal' + order.id" style="border-radius: 20px; padding: 8px 15px;">View Details</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div *ngIf="orders.length === 0" class="text-center">
-        <p class="text-muted" style="font-size: 16px;">Không có đơn hàng nào.</p>
+        <p class="text-muted" style="font-size: 16px;">No orders available.</p>
     </div>
 
     <div *ngFor="let order of orders" class="modal fade" [id]="'orderModal' + order.id" tabindex="-1" aria-labelledby="'orderModalLabel' + order.id" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" style="border-radius: 10px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="'orderModalLabel' + order.id" style="color: #4CAF50;">Chi Tiết Đơn Hàng - {{ order.fullname }}</h5>
+                    <h5 class="modal-title" id="'orderModalLabel' + order.id" style="color: #4CAF50;">Order Details - {{ order.fullname }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -59,16 +59,16 @@
                                 <img [src]="detail.thumbnail" alt="Product Image" class="img-thumbnail" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 8px;">
                                 <div>
                                     <strong>{{ detail.product_name }}</strong><br>
-                                    Màu: {{ detail.color }}<br>
-                                    Số lượng: {{ detail.number_of_products }}<br>
-                                    Tổng Tiền: {{ detail.total_money | currency }}
+                                    Color: {{ detail.color }}<br>
+                                    Quantity: {{ detail.number_of_products }}<br>
+                                    Total Price: {{ detail.total_money | currency }}
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 20px;">Đóng</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 20px;">Close</button>
                 </div>
             </div>
         </div>

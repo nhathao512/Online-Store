@@ -9,10 +9,10 @@
     text-align: center;
 }
 .product-header {
-    color: $shopapp-tint-color;
+    color: white;
 }
 .form-control {
-    background-color: $shopapp-background-color;
+    background-color: rgb(41, 40, 42, 0.6);
     border: 1px solid rgb(29, 33, 54);
     color: white;
 }
@@ -24,11 +24,9 @@
 .form-label {
     color: white;
 }
-.product-header {
-    color: $shopapp-tint-color;
-}
+
 .product-order {
-    color: $shopapp-title-color;
+    color: white;
 }
 table {
     width: 100%;

@@ -1,12 +1,14 @@
+<app-header></app-header>
+
 <div class="container">
     <form #registerForm="ngForm" (ngSubmit)="register()">
       <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-8 offset-md-2">
           <div class="register-form mx-auto">
-            <h2 class="register-header">Đăng ký</h2>
+            <h2 class="register-header text-center mb-4">Register</h2>
   
             <div class="form-group">
-              <label for="phoneNumber">Số điện thoại</label>
+              <label for="phoneNumber">Phone Number</label>
               <input type="text"
                      class="form-control"
                      [(ngModel)]="phoneNumber"
@@ -16,13 +18,12 @@
                      #phone="ngModel"
                      id="phoneNumber">
               <div class="divider-nospace"></div>
-              <p class="text-danger" *ngIf="phone.errors?.['required'] && phone.touched">Số điện thoại không được để trống</p>
-              <p class="text-danger" *ngIf="!phone.errors?.['required'] && phone.invalid && phone.touched">Số điện thoại phải có ít nhất 10 ký tự</p>
+              <p class="text-danger" *ngIf="phone.errors?.['required'] && phone.touched">Phone number is required</p>
+              <p class="text-danger" *ngIf="!phone.errors?.['required'] && phone.invalid && phone.touched">Phone number must be at least 10 characters</p>
             </div>
   
-            <div class="mt-3"></div>
-            <div class="form-group password-field">
-              <label for="password">Mật khẩu</label>
+            <div class="form-group mt-3">
+              <label for="password">Password</label>
               <input [type]="showPassword ? 'text' : 'password'"
                      class="form-control"
                      [(ngModel)]="password"
@@ -33,12 +34,11 @@
                      id="password">
               <i class="password-toggle fas" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePassword()"></i>
               <div class="divider-nospace"></div>
-              <p class="text-danger" *ngIf="pass.invalid && pass.touched">Mật khẩu phải có ít nhất 3 ký tự</p>
+              <p class="text-danger" *ngIf="pass.invalid && pass.touched">Password must be at least 3 characters</p>
             </div>
   
-            <div class="mt-3"></div>
-            <div class="form-group password-field">
-              <label for="retype-password">Gõ lại mật khẩu</label>
+            <div class="form-group mt-3">
+              <label for="retype-password">Retype Password</label>
               <input [type]="showPassword ? 'text' : 'password'"
                      class="form-control"
                      [(ngModel)]="retypePassword"
@@ -50,13 +50,12 @@
                      (input)="checkPasswordsMatch()">
               <i class="password-toggle fas" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePassword()"></i>
               <div class="divider-nospace"></div>
-              <p class="text-danger" *ngIf="retypePass.invalid && retypePass.touched">Mật khẩu phải có ít nhất 3 ký tự</p>
-              <p class="text-danger" *ngIf="password !== retypePassword && retypePass.touched">Mật khẩu không khớp</p>
+              <p class="text-danger" *ngIf="retypePass.invalid && retypePass.touched">Password must be at least 3 characters</p>
+              <p class="text-danger" *ngIf="password !== retypePassword && retypePass.touched">Passwords do not match</p>
             </div>
   
-            <div class="mt-3"></div>
-            <div class="form-group">
-              <label for="full-name">Họ và tên</label>
+            <div class="form-group mt-3">
+              <label for="full-name">Full Name</label>
               <input type="text"
                      class="form-control"
                      [(ngModel)]="fullName"
@@ -65,11 +64,11 @@
                      #fullNameInput="ngModel"
                      id="full-name">
               <div class="divider-nospace"></div>
-              <p class="text-danger" *ngIf="fullNameInput.invalid && fullNameInput.touched">Họ và tên không được để trống</p>
+              <p class="text-danger" *ngIf="fullNameInput.invalid && fullNameInput.touched">Full name is required</p>
             </div>
   
-            <div class="form-group">
-              <label for="date-of-birth">Ngày tháng năm sinh</label>
+            <div class="form-group mt-3">
+              <label for="date-of-birth">Date of Birth</label>
               <input type="date"
                      class="form-control"
                      [(ngModel)]="dateOfBirth"
@@ -79,13 +78,12 @@
                      (input)="checkFutureDate()"
                      id="date-of-birth">
               <div class="divider-nospace"></div>
-              <p class="text-danger" *ngIf="dob.invalid && dob.errors?.['required'] && dob.touched">Ngày tháng năm sinh không được để trống</p>
-              <p class="text-danger" *ngIf="dob.errors?.['futureDate'] && dob.touched">Ngày tháng năm sinh phải nhỏ hơn ngày hiện tại</p>
+              <p class="text-danger" *ngIf="dob.invalid && dob.errors?.['required'] && dob.touched">Date of birth is required</p>
+              <p class="text-danger" *ngIf="dob.errors?.['futureDate'] && dob.touched">Date of birth must be before today's date</p>
             </div>
   
-            <div class="mt-3"></div>
-            <div class="form-group">
-              <label for="address">Địa chỉ</label>
+            <div class="form-group mt-3">
+              <label for="address">Address</label>
               <input type="text"
                      class="form-control"
                      [(ngModel)]="address"
@@ -94,32 +92,18 @@
                      #addressInput="ngModel"
                      id="address">
               <div class="divider-nospace"></div>
-              <p class="text-danger" *ngIf="addressInput.invalid && addressInput.touched">Địa chỉ không được để trống</p>
+              <p class="text-danger" *ngIf="addressInput.invalid && addressInput.touched">Address is required</p>
             </div>
   
-            <!-- <div class="form-group">
-              <div class="form-check checkbox-text">
-                <input type="checkbox"
-                       class="form-check-input"
-                       [(ngModel)]="isAccepted"
-                       name="isAccepted"
-                       required
-                       #acceptInput="ngModel"
-                       id="agree">
-                <label class="form-check-label" for="agree">Tôi đồng ý với các điều khoản và điều kiện</label>
-                <p class="text-danger" *ngIf="!isAccepted && acceptInput.touched">Bạn phải đồng ý với điều khoản</p>
-              </div>
-            </div> -->
-  
             <button type="submit"
-                    class="register-button"
-                    [disabled]="!registerForm.valid">Đăng ký</button>
-            <div class="divider"></div>
-            <p class="text-center">Bạn đã có tài khoản? <span><a href="/login" class="register-link">Đăng nhập</a></span></p>
+                    class="register-button btn btn-primary w-100 mt-4"
+                    [disabled]="!registerForm.valid">Register</button>
+            <div class="divider mt-4"></div>
+            <p class="text-center">Already have an account? <span><a href="/login" class="register-link">Login</a></span></p>
           </div>
         </div>
       </div>
     </form>
-  </div>
-  <app-footer></app-footer>
-  
+</div>
+
+<app-footer></app-footer>

@@ -9,8 +9,6 @@ import { ApiResponse } from '../../responses/api.response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../base/base.component';
 import { OrderService } from '../../services/order.service';
-import moment from 'moment-timezone';
- 
 
 @Component({
   selector: 'app-order-management',
@@ -33,8 +31,11 @@ export class OrderManagementComponent extends BaseComponent implements OnInit {
   }
 
   // Hàm chuyển đổi thời gian UTC sang múi giờ Việt Nam (GMT+7)
-  convertToVietnamTime(date: Date): string {
-    return moment(date).tz('Asia/Ho_Chi_Minh').format('DD/MM/YYYY, HH:mm');
+  convertToVietnamTime(date: Date): Date {
+    const vietnamOffset = 7 ; // GMT+7 in minutes
+    const localOffset = date.getTimezoneOffset(); // Local timezone offset in minutes
+    const vietnamDate = new Date(date.getTime() + (vietnamOffset + localOffset) * 60000);
+    return vietnamDate;
   }
 
   getOrders(): void {
@@ -43,6 +44,8 @@ export class OrderManagementComponent extends BaseComponent implements OnInit {
         if (apiResponse.status === 'OK') {
           const response = apiResponse.data;
           console.log(response);
+          
+          // Sắp xếp đơn hàng theo id từ lớn nhất tới bé nhất (đơn mới nhất lên đầu)
           this.orders = response.map((order: any) => {
             order.order_date = this.convertToVietnamTime(new Date(order.order_date));
             order.order_details = order.order_details.map((detail: any) => {
@@ -51,6 +54,10 @@ export class OrderManagementComponent extends BaseComponent implements OnInit {
             });
             return order;
           });
+  
+          // Sắp xếp theo ID từ lớn nhất tới bé nhất
+          this.orders.sort((a, b) => b.id - a.id);  // Chú ý: dùng 'b.id - a.id' để sắp xếp giảm dần
+  
           this.loading = false;  // Đặt trạng thái loading là false sau khi dữ liệu được tải xong
         } else {
           this.error = 'Không thể lấy danh sách đơn hàng.';
@@ -64,4 +71,5 @@ export class OrderManagementComponent extends BaseComponent implements OnInit {
       }
     });
   }
+  
 }

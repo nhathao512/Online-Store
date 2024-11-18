@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiResponse } from '../../responses/api.response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../base/base.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detail-product',
@@ -29,19 +30,20 @@ export class DetailProductComponent extends BaseComponent implements OnInit {
   currentImageIndex: number = 0;
   quantity: number = 1;
   isPressedAddToCart: boolean = false;  
+
   ngOnInit() {
-    // Lấy productId từ URL      
+    // Get productId from the URL      
     const idParam = this.activatedRoute.snapshot.paramMap.get('id');
     debugger
     //this.cartService.clearCart();
-    //const idParam = 9 //fake tạm 1 giá trị
+    //const idParam = 9 //temporary fake value
     if (idParam !== null) {
       this.productId = +idParam;
     }
     if (!isNaN(this.productId)) {
       this.productService.getDetailProduct(this.productId).subscribe({
         next: (apiResponse: ApiResponse) => {
-          // Lấy danh sách ảnh sản phẩm và thay đổi URL
+          // Get the list of product images and change their URL
           const response = apiResponse.data
           debugger
           if (response.product_images && response.product_images.length > 0) {
@@ -51,7 +53,7 @@ export class DetailProductComponent extends BaseComponent implements OnInit {
           }
           debugger
           this.product = response
-          // Bắt đầu với ảnh đầu tiên
+          // Start with the first image
           this.showImage(0);
         },
         complete: () => {
@@ -66,25 +68,28 @@ export class DetailProductComponent extends BaseComponent implements OnInit {
       console.error('Invalid productId:', idParam);
     }
   }
+
   showImage(index: number): void {
     debugger
     if (this.product && this.product.product_images &&
       this.product.product_images.length > 0) {
-      // Đảm bảo index nằm trong khoảng hợp lệ        
+      // Ensure the index is within a valid range        
       if (index < 0) {
         index = 0;
       } else if (index >= this.product.product_images.length) {
         index = this.product.product_images.length - 1;
       }
-      // Gán index hiện tại và cập nhật ảnh hiển thị
+      // Set the current index and update the displayed image
       this.currentImageIndex = index;
     }
   }
+
   thumbnailClick(index: number) {
     debugger
-    // Gọi khi một thumbnail được bấm
-    this.currentImageIndex = index; // Cập nhật currentImageIndex
+    // Called when a thumbnail is clicked
+    this.currentImageIndex = index; // Update currentImageIndex
   }
+
   nextImage(): void {
     debugger
     this.showImage(this.currentImageIndex + 1);
@@ -94,14 +99,21 @@ export class DetailProductComponent extends BaseComponent implements OnInit {
     debugger
     this.showImage(this.currentImageIndex - 1);
   }
+
   addToCart(): void {
-    debugger
     this.isPressedAddToCart = true;
     if (this.product) {
       this.cartService.addToCart(this.product.id, this.quantity);
+  
+      // Show popup when the product is added to the cart successfully
+      Swal.fire({
+        icon: 'success',
+        title: 'Added to cart successfully!',
+        text: 'The product has been added to your cart.',
+      });
     } else {
-      // Xử lý khi product là null
-      console.error('Không thể thêm sản phẩm vào giỏ hàng vì product là null.');
+      // Handle the case where the product is null
+      console.error('Cannot add product to cart because the product is null.');
     }
   }
 
@@ -115,12 +127,14 @@ export class DetailProductComponent extends BaseComponent implements OnInit {
       this.quantity--;
     }
   }
+
   getTotalPrice(): number {
     if (this.product) {
       return this.product.price * this.quantity;
     }
     return 0;
   }
+
   buyNow(): void {
     if (this.isPressedAddToCart == false) {
       this.addToCart();

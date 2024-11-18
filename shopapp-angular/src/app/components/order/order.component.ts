@@ -14,7 +14,6 @@ import { ApiResponse } from '../../responses/api.response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../base/base.component';
 
-
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -56,10 +55,10 @@ export class OrderComponent extends BaseComponent implements OnInit {
     super();
     this.orderForm = this.formBuilder.group({
       fullname: ['', Validators.required],
-      email: ['', [Validators.email]], // Không bắt buộc, chỉ kiểm tra định dạng nếu có giá trị
+      email: ['', [Validators.email]], // Optional, only checks format if a value is present
       phone_number: ['', [Validators.required, Validators.minLength(10)]],
       address: ['', [Validators.required, Validators.minLength(10)]],
-      note: [''], // Không bắt buộc
+      note: [''], // Optional
       couponCode: [''],
       shipping_method: ['express'],
       payment_method: ['cod']
@@ -71,15 +70,21 @@ export class OrderComponent extends BaseComponent implements OnInit {
     this.cart = this.cartService.getCart();
     const productIds = Array.from(this.cart.keys());
 
+    // Check if the cart is empty
     if (productIds.length === 0) {
       Swal.fire({
         icon: 'info',
-        title: 'Thông báo',
-        text: 'Giỏ hàng của bạn đang trống.'
+        title: 'Notification',
+        text: 'Your cart is empty.',
+        confirmButtonText: 'Go to Home', // Only show this button
+      }).then(() => {
+        // Navigate to the homepage when the 'Go to Home' button is clicked
+        this.router.navigate(['/']);
       });
       return;
     }
 
+    // Get product information in the cart
     this.productService.getProductsByIds(productIds).subscribe({
       next: (apiResponse: ApiResponse) => {
         const products: Product[] = apiResponse.data;
@@ -100,15 +105,15 @@ export class OrderComponent extends BaseComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: `Không thể lấy thông tin sản phẩm: ${error?.error?.message ?? 'Đã xảy ra lỗi'}`,
+          title: 'Error',
+          text: `Unable to retrieve product information: ${error?.error?.message ?? 'An error occurred'}`,
         });
       }
     });
   }
 
   placeOrder() {
-    // Kiểm tra các trường bắt buộc riêng biệt
+    // Check mandatory fields
     if (
       !this.orderForm.get('fullname')?.value ||
       !this.orderForm.get('phone_number')?.value ||
@@ -116,13 +121,13 @@ export class OrderComponent extends BaseComponent implements OnInit {
     ) {
       Swal.fire({
         icon: 'warning',
-        title: 'Thông báo',
-        text: 'Vui lòng kiểm tra và điền đầy đủ các thông tin bắt buộc (Họ tên, Số điện thoại, Địa chỉ).'
+        title: 'Notification',
+        text: 'Please make sure all required fields (Full name, Phone number, Address) are filled in.'
       });
       return;
     }
-  
-    // Gán giá trị từ form vào đối tượng orderData
+
+    // Assign form values to orderData object
     this.orderData = {
       ...this.orderData,
       ...this.orderForm.value
@@ -132,16 +137,16 @@ export class OrderComponent extends BaseComponent implements OnInit {
       quantity: cartItem.quantity
     }));
     this.orderData.total_money = this.totalAmount;
-  
+
     this.orderService.placeOrder(this.orderData).subscribe({
       next: (response: ApiResponse) => {
-        const orderId = response.data.id; // Đảm bảo API trả về id của đơn hàng
-          localStorage.setItem('latestOrderId', orderId.toString());
-          console.log('Đơn hàng đã được lưu với ID:', orderId);
+        const orderId = response.data.id; // Ensure API returns the order ID
+        localStorage.setItem('latestOrderId', orderId.toString());
+        console.log('Order has been saved with ID:', orderId);
         Swal.fire({
           icon: 'success',
-          title: 'Thành công',
-          text: 'Đặt hàng thành công!'
+          title: 'Success',
+          text: 'Order placed successfully!'
         }).then(() => {
           this.cartService.clearCart();
           this.router.navigate(['/']);
@@ -153,13 +158,12 @@ export class OrderComponent extends BaseComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: `Lỗi khi đặt hàng: ${error?.error?.message ?? 'Đã xảy ra lỗi'}`
+          title: 'Error',
+          text: `Error placing order: ${error?.error?.message ?? 'An error occurred'}`
         });
       },
     });
   }
-  
 
   decreaseQuantity(index: number): void {
     if (this.cartItems[index].quantity > 1) {
@@ -184,17 +188,31 @@ export class OrderComponent extends BaseComponent implements OnInit {
 
   confirmDelete(index: number): void {
     Swal.fire({
-      title: 'Xác nhận',
-      text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+      title: 'Confirm',
+      text: 'Are you sure you want to remove this product?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Xóa',
-      cancelButtonText: 'Hủy'
+      confirmButtonText: 'Remove',
+      cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
+        // Remove product from the cart
         this.cartItems.splice(index, 1);
         this.updateCartFromCartItems();
         this.calculateTotal();
+
+        // Check if the cart is empty after removal
+        if (this.cartItems.length === 0) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Notification',
+            text: 'Your cart is empty.',
+            confirmButtonText: 'Go to Home', // 'Go to Home' button
+          }).then(() => {
+            // Navigate user to the homepage when the button is clicked
+            this.router.navigate(['/']);
+          });
+        }
       }
     });
   }
@@ -210,15 +228,15 @@ export class OrderComponent extends BaseComponent implements OnInit {
             this.couponApplied = true;
             Swal.fire({
               icon: 'success',
-              title: 'Thành công',
-              text: 'Mã giảm giá đã được áp dụng.'
+              title: 'Success',
+              text: 'Coupon applied successfully.'
             });
           },
           error: () => {
             Swal.fire({
               icon: 'error',
-              title: 'Lỗi',
-              text: 'Mã giảm giá không hợp lệ hoặc đã hết hạn.'
+              title: 'Error',
+              text: 'The coupon code is invalid or expired.'
             });
           }
         });
