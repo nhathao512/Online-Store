@@ -35,11 +35,12 @@ export class HeaderComponent extends BaseComponent implements OnInit {
       debugger
       this.router.navigate(['/user-profile']);
     }
+
     else if(index === 1){
-      debugger
-      const orderId = '45'; // Replace with the actual order ID logic if needed
-      this.router.navigate([`/orders/${orderId}`]);
+      //   debugger
+        this.router.navigate([`/manage-orders`]);
     } 
+
     else if (index === 2) {
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();

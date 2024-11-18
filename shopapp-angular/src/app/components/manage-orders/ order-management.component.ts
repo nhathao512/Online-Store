@@ -8,7 +8,9 @@ import { CommonModule } from '@angular/common';
 import { ApiResponse } from '../../responses/api.response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../base/base.component';
-import {OrderService} from '../../services/order.service';
+import { OrderService } from '../../services/order.service';
+import moment from 'moment-timezone';
+ 
 
 @Component({
   selector: 'app-order-management',
@@ -30,7 +32,10 @@ export class OrderManagementComponent extends BaseComponent implements OnInit {
     this.getOrders();  // Gọi hàm để lấy danh sách đơn hàng khi component được khởi tạo
   }
 
-
+  // Hàm chuyển đổi thời gian UTC sang múi giờ Việt Nam (GMT+7)
+  convertToVietnamTime(date: Date): string {
+    return moment(date).tz('Asia/Ho_Chi_Minh').format('DD/MM/YYYY, HH:mm');
+  }
 
   getOrders(): void {
     this.orderService.getOrdersByUserId(this.tokenService.getUserId()).subscribe({
@@ -39,7 +44,7 @@ export class OrderManagementComponent extends BaseComponent implements OnInit {
           const response = apiResponse.data;
           console.log(response);
           this.orders = response.map((order: any) => {
-            order.order_date = new Date(order.order_date);
+            order.order_date = this.convertToVietnamTime(new Date(order.order_date));
             order.order_details = order.order_details.map((detail: any) => {
               detail.thumbnail = `${environment.apiBaseUrl}/products/images/${detail.thumbnail}`;
               return detail;
