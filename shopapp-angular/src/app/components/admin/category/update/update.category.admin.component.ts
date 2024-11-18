@@ -54,8 +54,8 @@ export class UpdateCategoryAdminComponent extends BaseComponent implements OnIni
         // Success notification with SweetAlert2
         Swal.fire({
           icon: 'success',
-          title: 'Thành công',
-          text: 'Danh mục đã được cập nhật thành công!',
+          title: 'Success',
+          text: 'The category has been updated successfully!',
         }).then(() => {
           // After the success popup, navigate to the category list
           this.router.navigate(['/admin/categories']);
@@ -68,8 +68,8 @@ export class UpdateCategoryAdminComponent extends BaseComponent implements OnIni
         // Error handling if update fails
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: 'Không thể cập nhật danh mục, vui lòng thử lại.',
+          title: 'Error',
+          text: 'Unable to update category, please try again.',
         });
         console.error(error?.error?.message ?? '');
       } 

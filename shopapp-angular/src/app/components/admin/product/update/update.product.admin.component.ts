@@ -46,8 +46,8 @@ export class UpdateProductAdminComponent extends BaseComponent implements OnInit
       error: (error: HttpErrorResponse) => {
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: `Không thể tải danh mục: ${error?.error?.message ?? 'Đã xảy ra lỗi'}`,
+          title: 'Error',
+          text: `Unable to load catalog: ${error?.error?.message ?? 'An error has occurred'}`,
         });
       } 
     });
@@ -65,26 +65,47 @@ export class UpdateProductAdminComponent extends BaseComponent implements OnInit
       error: (error: HttpErrorResponse) => {
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: `Không thể tải chi tiết sản phẩm: ${error?.error?.message ?? 'Đã xảy ra lỗi'}`,
+          title: 'Error',
+          text: `Unable to load product details: ${error?.error?.message ?? 'An error has occurred'}`,
         });
       } 
     });     
   }
 
   updateProduct() {
+    // Kiểm tra các trường hợp chưa điền đầy đủ thông tin hoặc giá không hợp lệ
+    if (!this.updatedProduct.name || !this.updatedProduct.description || !this.updatedProduct.category_id) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'Please fill in all product information before updating.',
+      });
+      return;
+    }
+  
+    if (this.updatedProduct.price <= 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'Product price must be greater than 0.',
+      });
+      return;
+    }
+  
     const updateProductDTO: UpdateProductDTO = {
       name: this.updatedProduct.name,
       price: this.updatedProduct.price,
       description: this.updatedProduct.description,
       category_id: this.updatedProduct.category_id
     };
+  
+    // Gọi API để cập nhật sản phẩm
     this.productService.updateProduct(this.product.id, updateProductDTO).subscribe({
       next: () => {
         Swal.fire({
           icon: 'success',
-          title: 'Thành công',
-          text: 'Cập nhật sản phẩm thành công.',
+          title: 'Success',
+          text: 'Product update successful.',
         }).then(() => {
           this.router.navigate(['/admin/products']);
         });
@@ -92,12 +113,13 @@ export class UpdateProductAdminComponent extends BaseComponent implements OnInit
       error: (error: HttpErrorResponse) => {
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: `Cập nhật sản phẩm thất bại: ${error?.error?.message ?? 'Đã xảy ra lỗi'}`,
+          title: 'Error',
+          text: `Product update failed: ${error?.error?.message ?? 'An error has occurred'}`,
         });
-      } 
-    });  
+      }
+    });
   }
+  
 
   showImage(index: number): void {
     if (this.product && this.product.product_images && this.product.product_images.length > 0) {
@@ -127,8 +149,8 @@ export class UpdateProductAdminComponent extends BaseComponent implements OnInit
     if (files.length > 5) {
       Swal.fire({
         icon: 'warning',
-        title: 'Cảnh báo',
-        text: 'Vui lòng chọn tối đa 5 ảnh.',
+        title: 'Warning',
+        text: 'Please select up to 5 photos.',
       });
       return;
     }
@@ -137,8 +159,8 @@ export class UpdateProductAdminComponent extends BaseComponent implements OnInit
       next: () => {
         Swal.fire({
           icon: 'success',
-          title: 'Thành công',
-          text: 'Tải lên ảnh thành công.',
+          title: 'Success',
+          text: 'Upload photo successfully.',
         });
         this.images = [];
         this.getProductDetails();
@@ -146,8 +168,8 @@ export class UpdateProductAdminComponent extends BaseComponent implements OnInit
       error: (error: HttpErrorResponse) => {
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: `Tải lên ảnh thất bại: ${error?.error?.message ?? 'Đã xảy ra lỗi'}`,
+          title: 'Error',
+          text: `Photo upload failed: ${error?.error?.message ?? 'An error has occurred'}`,
         });
       } 
     });
@@ -155,28 +177,28 @@ export class UpdateProductAdminComponent extends BaseComponent implements OnInit
 
   deleteImage(productImage: ProductImage) {
     Swal.fire({
-      title: 'Xác nhận',
-      text: 'Bạn có chắc chắn muốn xóa ảnh này?',
+      title: 'Confirmation',
+      text: 'Are you sure you want to delete this photo?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Xóa',
-      cancelButtonText: 'Hủy'
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
         this.productService.deleteProductImage(productImage.id).subscribe({
           next: () => {
             Swal.fire({
               icon: 'success',
-              title: 'Thành công',
-              text: 'Xóa ảnh thành công.',
+              title: 'Success',
+              text: 'Deleted photos successfully.',
             });
             this.getProductDetails();
           },
           error: (error: HttpErrorResponse) => {
             Swal.fire({
               icon: 'error',
-              title: 'Lỗi',
-              text: `Xóa ảnh thất bại: ${error?.error?.message ?? 'Đã xảy ra lỗi'}`,
+              title: 'Error',
+              text: `Delete photo failed: ${error?.error?.message ?? 'An error has occurred'}`,
             });
           } 
         });

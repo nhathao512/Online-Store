@@ -97,12 +97,12 @@ export class ProductAdminComponent extends BaseComponent implements OnInit {
     }  
     deleteProduct(product: Product) {
       Swal.fire({
-        title: 'Xác nhận',
-        text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+        title: 'Confirmation',
+        text: 'Are you sure you want to delete this product?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Xóa',
-        cancelButtonText: 'Hủy'
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel'
       }).then((result) => {
         if (result.isConfirmed) {
           debugger;
@@ -111,8 +111,8 @@ export class ProductAdminComponent extends BaseComponent implements OnInit {
               debugger;
               Swal.fire({
                 icon: 'success',
-                title: 'Thành công',
-                text: 'Xóa sản phẩm thành công.'
+                title: 'Success',
+                text: 'Product deletion successful'
               }).then(() => {
                 location.reload(); // Reload lại trang sau khi xóa thành công
               });
@@ -124,8 +124,8 @@ export class ProductAdminComponent extends BaseComponent implements OnInit {
               debugger;
               Swal.fire({
                 icon: 'error',
-                title: 'Lỗi',
-                text: `Xóa sản phẩm thất bại: ${error?.error?.message ?? 'Đã xảy ra lỗi'}`,
+                title: 'Error',
+                text: `Delete failed products: ${error?.error?.message ?? 'An error has occurred'}`,
               });
             }
           });
