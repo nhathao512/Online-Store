@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit, inject } from '@angular/core';
 import { LoginDTO } from '../../dtos/user/login.dto';
 import { NgForm } from '@angular/forms';
-import { Role } from '../../models/role'; // Đường dẫn đến model Role
+import { Role } from '../../models/role';
 import { UserResponse } from '../../responses/user/user.response';
 
 import { HeaderComponent } from '../header/header.component';
@@ -14,7 +14,7 @@ import { BaseComponent } from '../base/base.component';
 
 import { tap, switchMap, catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
-
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 @Component({
   selector: 'app-login',
@@ -28,43 +28,23 @@ import { of } from 'rxjs';
     FormsModule
   ]
 })
-export class LoginComponent extends BaseComponent implements OnInit{
-  @ViewChild('loginForm') loginForm!: NgForm;  
-    
+export class LoginComponent extends BaseComponent implements OnInit {
+  @ViewChild('loginForm') loginForm!: NgForm;
 
-  /*
-  //Login user1
-  phoneNumber: string = '33445566';
-  password: string = '123456789';
-
-  //Login user2
-  phoneNumber: string = '0964896239';
-  password: string = '123456789';
-
-
-  //Login admin
-  phoneNumber: string = '11223344';
-  password: string = '11223344';
-
-  */
   phoneNumber: string = '';
   password: string = '';
   showPassword: boolean = false;
 
-  roles: Role[] = []; // Mảng roles
+  roles: Role[] = [];
   rememberMe: boolean = true;
-  selectedRole: Role | undefined; // Biến để lưu giá trị được chọn từ dropdown
-  userResponse?: UserResponse
+  selectedRole: Role | undefined;
+  userResponse?: UserResponse;
 
   onPhoneNumberChange() {
     console.log(`Phone typed: ${this.phoneNumber}`);
-    //how to validate ? phone must be at least 6 characters
   }
-  
 
   ngOnInit() {
-    // Gọi API lấy danh sách roles và lưu vào biến roles
-    debugger
     this.roleService.getRoles().subscribe({
       next: ({ data: roles }: ApiResponse) => {
         this.roles = roles;
@@ -73,51 +53,42 @@ export class LoginComponent extends BaseComponent implements OnInit{
       error: (error: HttpErrorResponse) => {
         console.error(error?.error?.message ?? '');
       }
-    });    
+    });
   }
+
   createAccount() {
-    debugger
-    // Chuyển hướng người dùng đến trang đăng ký (hoặc trang tạo tài khoản)
-    this.router.navigate(['/register']); 
+    this.router.navigate(['/register']);
   }
-  loginWithGoogle() {    
-    debugger
+
+  loginWithGoogle() {
     this.authService.authenticate('google').subscribe({
       next: (url: string) => {
-        debugger
-        // Chuyển hướng người dùng đến URL đăng nhập Google
         window.location.href = url;
       },
       error: (error: HttpErrorResponse) => {
-        debugger
-        console.error('Lỗi khi xác thực với Google:', error?.error?.message ?? '');
-      }
-    });
-  }  
-  
-  loginWithFacebook() {         
-    // Logic đăng nhập với Facebook
-    debugger
-    this.authService.authenticate('facebook').subscribe({
-      next: (url: string) => {
-        debugger
-        // Chuyển hướng người dùng đến URL đăng nhập Facebook
-        window.location.href = url;
-      },
-      error: (error: HttpErrorResponse) => {
-        debugger
-        console.error('Lỗi khi xác thực với Facebook:', error?.error?.message ?? '');
+        console.error('Error authenticating with Google:', error?.error?.message ?? '');
       }
     });
   }
-  
+
+  loginWithFacebook() {
+    this.authService.authenticate('facebook').subscribe({
+      next: (url: string) => {
+        window.location.href = url;
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Error authenticating with Facebook:', error?.error?.message ?? '');
+      }
+    });
+  }
+
   login() {
     const loginDTO: LoginDTO = {
       phone_number: this.phoneNumber,
       password: this.password,
       role_id: this.selectedRole?.id ?? 1
     };
-  
+
     this.userService.login(loginDTO).pipe(
       tap((apiResponse: ApiResponse) => {
         const { token } = apiResponse.data;
@@ -131,11 +102,13 @@ export class LoginComponent extends BaseComponent implements OnInit{
               ...apiResponse2.data,
               date_of_birth: new Date(apiResponse2.data.date_of_birth),
             };
-  
+
+            // console.log("hahahaha", this.userResponse)
+
             if (this.rememberMe) {
               this.userService.saveUserResponseToLocalStorage(this.userResponse);
             }
-  
+
             if (this.userResponse?.role.name === 'admin') {
               this.router.navigate(['/admin']);
             } else if (this.userResponse?.role.name === 'user') {
@@ -143,8 +116,8 @@ export class LoginComponent extends BaseComponent implements OnInit{
             }
           }),
           catchError((error: HttpErrorResponse) => {
-            console.error('Lỗi khi lấy thông tin người dùng:', error?.error?.message ?? '');
-            return of(null); // Tiếp tục chuỗi Observable
+            console.error('Error retrieving user information:', error?.error?.message ?? '');
+            return of(null); // Continue Observable chain
           })
         );
       }),
@@ -153,11 +126,26 @@ export class LoginComponent extends BaseComponent implements OnInit{
       })
     ).subscribe({
       error: (error: HttpErrorResponse) => {
-        console.error('Lỗi đăng nhập:', error?.error?.message ?? '');
+        console.error('Login error:', error?.error?.message ?? '');
+
+        // Check if the error message is "Your account has been locked"
+        if (error?.error?.message === 'Tài khoản của bạn đã bị khóa') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Account Locked',
+            text: 'Your account has been locked, please contact support.',
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Login Error',
+            text: error?.error?.message ?? 'An error occurred, please try again.',
+          });
+        }
       }
     });
   }
-  
+
   togglePassword() {
     this.showPassword = !this.showPassword;
   }

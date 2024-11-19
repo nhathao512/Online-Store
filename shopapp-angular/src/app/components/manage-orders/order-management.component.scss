@@ -1,0 +1,207 @@
+/* Main Container */
+.container {
+  margin-top: 20px;
+  margin-bottom: 88px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.intro-section {
+  color: black;
+  line-height: 82.4;
+  padding: 10px;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
+   /* Nền cam nhạt */
+  border-radius: 10px; /* Bo góc */
+  box-shadow: 0 4px 8px #FF6F00; /* Bóng đổ nhẹ */
+}
+
+/* Page Title */
+.manage-order-title {
+  color: #000000;
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+/* Order Card */
+.order-card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.order-card:hover {
+  transform: scale(1.05);
+}
+
+/* Card Header */
+.order-card-header {
+  background-color: #FF6F00;
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 10px 10px 0 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Order Information */
+.order-info li {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+.order-info li strong {
+  color: #FF6F00;
+}
+
+/* Buttons */
+.view-details-btn {
+  margin-top: 15px;
+  background: linear-gradient(to right, #FF6F00, #FF4500);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 10px 15px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.view-details-btn:hover {
+  background: linear-gradient(to right, #FF4500, #FF6F00);
+  transform: scale(1.05);
+}
+
+/* No Orders Message */
+.no-orders {
+  margin-top: 20px;
+}
+
+.no-orders p {
+  font-size: 18px;
+  color: #FF6F00;
+  font-weight: bold;
+}
+
+/* Modal */
+.modal-order-content {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-order-header {
+  background-color: #FF6F00;
+  color: white;
+  font-weight: bold;
+  padding: 15px;
+  border-bottom: 2px solid #FF4500;
+}
+
+/* Product Thumbnail in Modal */
+.product-thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+/* Close Button in Modal */
+.close-btn {
+  background-color: #FF6F00;
+  color: white;
+  border-radius: 20px;
+  padding: 8px 15px;
+  transition: background 0.3s ease;
+}
+
+.close-btn:hover {
+  background-color: #FF4500;
+}
+
+
+/* Badge */
+.badge {
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.badge-warning {
+  background-color: #FFC107; /* Màu vàng cảnh báo */
+}
+
+.badge-success {
+  background-color: #28A745; /* Màu xanh thành công */
+}
+
+.badge-danger {
+  background-color: #DC3545; /* Màu đỏ lỗi */
+}
+
+.badge-info {
+  background-color: #0DF0E9; /* Màu xanh thông tin */
+}
+
+.badge-primary {
+  background-color: #3328D3; /* Màu xanh chủ đạo */
+}
+
+/* Nút hành động */
+.btn-info {
+  background-color: #FF6F00; /* Nền cam */
+  border-color: #FF6F00;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-info:hover {
+  background-color: #FF4500; /* Cam đậm khi hover */
+  border-color: #FF4500;
+  transform: scale(1.05); /* Hiệu ứng phóng to nhẹ */
+}
+
+/* Header của App */
+app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+}
+
+/* Header Table khi cuộn */
+.table th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Modal */
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  background-color: #f1f1f1;
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.modal-footer {
+  background-color: #f8f9fa;
+}
+

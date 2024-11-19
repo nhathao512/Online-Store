@@ -1,49 +1,49 @@
 <app-header></app-header>
 <div class="container">
     <div class="intro-section">
-        <h1>Chi tiết đơn hàng</h1>
-        <p>Xem thông tin chi tiết đơn hàng</p>
-    </div>
+        <h1 class=" mb-2 manage-order-title">Order Details</h1>
+        
+    </div> 
     
-    <!-- Thông tin người nhận -->
+    <!-- Recipient Information -->
     @if(orderResponse) {
         <div class="row">
             <div class="col-md-6">
-                <h2 class="product-header">Thông tin người nhận</h2>
+                <h2 class="product-header">Recipient Information</h2>
                 <div class="mb-3">
-                    <p class="form-label">Họ và tên: {{ orderResponse.fullname }}</p>
+                    <p class="form-label">Full Name: {{ orderResponse.fullname }}</p>
                 </div>
-                <!-- Các trường thông tin khác -->
+                <!-- Other information fields -->
                 <div class="mb-3">
                     <p class="form-label">Email: {{ orderResponse.email }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Số điện thoại: {{ orderResponse.phone_number }}</p>
+                    <p class="form-label">Phone Number: {{ orderResponse.phone_number }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Địa chỉ: {{ orderResponse.address }}</p>
+                    <p class="form-label">Address: {{ orderResponse.address }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Ghi chú: {{ orderResponse.note }}</p>
+                    <p class="form-label">Notes: {{ orderResponse.note }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Phương thức vận chuyển: {{ orderResponse.shipping_method }}</p>
+                    <p class="form-label">Shipping Method: {{ orderResponse.shipping_method }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Phương thức thanh toán: {{ orderResponse.payment_method }}</p>
+                    <p class="form-label">Payment Method: {{ orderResponse.payment_method }}</p>
                 </div>                        
             </div>
     
-            <!-- Sản phẩm đã đặt hàng -->
+            <!-- Ordered Products -->
             <div class="col-md-6">
-                <h2 class="product-order">Sản phẩm đã đặt hàng</h2>
+                <h2 class="product-order">Ordered Products</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th scope="col" class="text-start">Sản phẩm</th>
-                            <th scope="col">Số lượng</th>
-                            <th scope="col">Đơn giá</th>
-                            <!-- <th scope="col">Tổng giá</th> -->
+                            <th scope="col" class="text-center">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Total Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,21 +52,21 @@
                                 <td>
                                     <div class="product-info">
                                         <img [src]="item.thumbnail" alt="Product Image" class="product-image">
-                                        <span class="product-name">{{ item.name }}</span>
+                                        <span class="product-name">{{ item.product_name }}</span>
                                     </div>
                                 </td>
-                                <td>{{ item.number_of_products || null }}</td>
-                                <td>{{ item.price | number:'1.2-2' }}</td>
-                                <td>{{ item.total_money | number:'1.2-2' }}</td>
+                                <td>{{ item.number_of_products || 10 }}</td>
+                                <td>${{ item.price | number:'1.2-2' }}</td>
+                                <td>${{ item.number_of_products * item.price | number:'1.2-2' }}</td>
                             </tr>
                         }                        
                     </tbody>
                 </table>
                 <div class="text-start mt-3">
-                    <h4 class="header-text text-end">Tổng giá: {{ orderResponse.total_money | number:'1.2-2' }}</h4>
+                    <h4 class="header-text text-end">Total Price: ${{ orderResponse.total_money | number:'1.2-2' }}</h4>
                 </div>            
             </div>
         </div>    
-}    
+    }    
 </div>
 <app-footer></app-footer>

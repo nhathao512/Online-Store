@@ -9,5 +9,5 @@ export interface OrderDetail {
     total_money: number;
     color?: string; // Dấu "?" cho biết thuộc tính này là tùy chọn
     thumbnail: string;
-    name: string;
+    product_name: string;
 }

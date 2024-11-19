@@ -1,0 +1,76 @@
+<app-header></app-header>
+
+<!-- Main Container -->
+<div class="container">
+    <div class="intro-section">
+    <h1 class="text-center mb-2 manage-order-title">Order Management</h1>
+    </div>
+    <!-- Orders Grid -->
+    <div *ngIf="orders.length > 0" class="row">
+        <div *ngFor="let order of orders" class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <!-- Order Card -->
+            <div class="card shadow order-card">
+                <div class="card-header text-white order-card-header">
+                    <h5 class="card-title mb-0">{{ order.fullname }}</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled order-info">
+                        <li><strong>Phone:</strong> {{ order.phone_number }}</li>
+                        <li><strong>Email:</strong> {{ order.email }}</li>
+                        <li><strong>Address:</strong> {{ order.address }}</li>
+                        <li><strong>Order Date:</strong> {{ order.order_date | date: 'short' }}</li>
+                        <li><strong>Total Price:</strong> {{ order.total_money | currency }}</li>
+                        <li>
+                            <strong>Status:</strong>
+                            <span class="badge" [ngClass]="{
+                                'badge-warning': order.status === 'pending',
+                                'badge-success': order.status === 'completed',
+                                'badge-danger': order.status === 'cancelled',
+                                'badge-info': order.status === 'shipped',
+                                'badge-primary': order.status === 'processing'
+                            }">{{ order.status }}</span>
+                        </li>
+                    </ul>
+                    <a [href]="'/orders/' + order.id" class="btn btn-gradient w-100 view-details-btn">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Orders Message -->
+    <div *ngIf="orders.length === 0" class="text-center no-orders">
+        <p class="text-muted">No orders available at the moment.</p>
+    </div>
+</div>
+
+<!-- Modal for Viewing Order Details -->
+<div *ngFor="let order of orders" class="modal fade" [id]="'orderModal' + order.id" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modal-order-content">
+            <div class="modal-header modal-order-header">
+                <h5 class="modal-title">Order Details - {{ order.fullname }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let detail of order.order_details">
+                        <div class="d-flex align-items-center">
+                            <img [src]="detail.thumbnail" alt="Product Image" class="product-thumbnail">
+                            <div>
+                                <strong>{{ detail.product_name }}</strong><br>
+                                Color: {{ detail.color }}<br>
+                                Quantity: {{ detail.number_of_products }}<br>
+                                Total Price: {{ detail.total_money | currency }}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-btn" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

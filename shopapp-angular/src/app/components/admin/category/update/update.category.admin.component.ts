@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ApiResponse } from '../../../../responses/api.response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../../../base/base.component';
+import Swal from 'sweetalert2'; // Import SweetAlert2 for popups
 
 @Component({
   selector: 'app-detail.category.admin',
@@ -21,13 +22,12 @@ import { BaseComponent } from '../../../base/base.component';
 export class UpdateCategoryAdminComponent extends BaseComponent implements OnInit {
   categoryId: number = 0;
   updatedCategory: Category = {} as Category;
-   ngOnInit(): void {    
+
+  ngOnInit(): void {    
     this.activatedRoute.paramMap.subscribe(params => {
-      debugger
       this.categoryId = Number(params.get('id'));
       this.getCategoryDetails();
     });
-    
   }
   
   getCategoryDetails(): void {
@@ -36,29 +36,41 @@ export class UpdateCategoryAdminComponent extends BaseComponent implements OnIni
         this.updatedCategory = { ...apiResponse.data };                        
       },
       complete: () => {
-        
+        // Handle any logic after completion if needed
       },
       error: (error: HttpErrorResponse) => {
-        debugger;
         console.error(error?.error?.message ?? '');
       } 
     });     
   }
+
+  // Method to update the category
   updateCategory() {
-    // Implement your update logic here
     const updateCategoryDTO: UpdateCategoryDTO = {
       name: this.updatedCategory.name,      
     };
     this.categoryService.updateCategory(this.updatedCategory.id, updateCategoryDTO).subscribe({
-      next: (response: any) => {  
-        debugger        
+      next: (response: any) => {
+        // Success notification with SweetAlert2
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'The category has been updated successfully!',
+        }).then(() => {
+          // After the success popup, navigate to the category list
+          this.router.navigate(['/admin/categories']);
+        });
       },
       complete: () => {
-        debugger;
-        this.router.navigate(['/admin/categories']);        
+        // Handle any logic after completion if needed
       },
       error: (error: HttpErrorResponse) => {
-        debugger;
+        // Error handling if update fails
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Unable to update category, please try again.',
+        });
         console.error(error?.error?.message ?? '');
       } 
     });  

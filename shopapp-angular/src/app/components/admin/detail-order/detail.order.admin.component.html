@@ -1,6 +1,5 @@
-<h1>This is detail order admin</h1>
-<div class="container">
-  <h1>Order Details</h1>
+<div class="container" *ngIf="orderResponse">
+  <h1>Order Details Admin Page</h1>
   
   <div class="row">
     <div class="col-md-6">
@@ -16,8 +15,7 @@
       
       <div class="form-group">
         <label for="statusSelect"><strong>Status:</strong></label>
-        <select class="form-control" id="statusSelect" 
-          [(ngModel)]="orderResponse.status">
+        <select class="form-control" id="statusSelect" [(ngModel)]="orderResponse.status">
           <option value="pending">Pending</option>
           <option value="processing">Processing</option>
           <option value="shipped">Shipped</option>
@@ -25,7 +23,9 @@
           <option value="cancelled">Cancelled</option>
         </select>
       </div>          
-  </div>  
+    </div>  
+  </div>
+  
   <h3>Order Details</h3>
   <table class="table">
     <thead>
@@ -33,24 +33,19 @@
         <th>Product</th>
         <th>Price</th>
         <th>Quantity</th>
-        <!--<th>Total</th>-->
+        <th>Total</th>
       </tr>
     </thead>
     <tbody>
-      @for(order_detail of orderResponse.order_details; 
-        track order_detail.product.name) {
-          <tr>
-            <td>{{ order_detail.product.name }}</td>
-            <td>
-              <p>{{order_detail.product.price}}</p>          
-            <td>
-              <p>{{order_detail.number_of_products}}</p>          
-            </td>
-            <!--<td>{{ order_detail.total_money }}</td>-->
-          </tr>
-      }      
+      <tr *ngFor="let order_detail of orderResponse.order_details">
+        
+        <td>{{ order_detail.product_name || "Khong lay duoc ten"}}</td>
+        <td>{{ order_detail.price | currency }}</td>
+        <td>{{ order_detail.number_of_products }}</td>
+        <td>$ {{ order_detail.price * order_detail.number_of_products }}</td>
+      </tr>
     </tbody>
   </table>  
-  <button class="btn btn-primary col-md-2" 
-    (click)="saveOrder()">Save</button>
+  
+  <button class="btn btn-primary col-md-2" (click)="saveOrder()">Save</button>
 </div>

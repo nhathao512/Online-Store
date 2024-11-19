@@ -27,6 +27,10 @@ public class CategoryService implements ICategoryService {
         return categoryRepository.save(newCategory);
     }
 
+    public boolean checkCategoryExists(String name) {
+        return categoryRepository.existsByName(name);
+    }
+
     @Override
     public Category getCategoryById(long id) {
         return categoryRepository.findById(id)

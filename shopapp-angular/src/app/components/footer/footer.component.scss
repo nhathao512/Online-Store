@@ -1,3 +1,22 @@
 .footer-description {
-    color: rgb(173, 178, 203);
+    color: #000000;
 }
+
+footer {
+    background-color: #FFF8E7;
+    color: #000000;
+    bottom: 0; /* Đặt footer ở dưới cùng */
+    left: 0;
+    height: 70px;
+    width: 100%;
+    padding: 20px;
+
+}
+
+.divider {
+    height: 2px; /* Độ dày của đường */
+    // background-color: #FF6F00; /* Màu cam */
+    width: 100%; /* Chiều rộng đầy đủ */
+    box-shadow: 0 4px 8px #FF6F00;
+}
+

@@ -1,10 +1,10 @@
 <h1>User Admin Page</h1>
 <div class="row mb-3">
   <div class="col-md-8">
-    <input type="text" class="form-control search-input" placeholder="Tìm nguời dùng" [(ngModel)]="keyword">
+    <input type="text" class="form-control search-input" placeholder="Find user" [(ngModel)]="keyword">
   </div>
   <div class="col-md-4">
-    <button class="btn btn-primary" (click)="searchUsers()">Tìm kiếm</button>
+    <button class="btn btn-primary" (click)="searchUsers()">Search</button>
   </div>
 </div>
 <table class="table table-striped">
@@ -35,9 +35,9 @@
                       }" (click)="toggleUserStatus(user)">
                     {{ user.is_active ? 'Block User' : 'Unblock User' }}
                 </button>
-                <button class="btn btn-primary ms-2" (click)="resetPassword(user.id)">
+                <!-- <button class="btn btn-primary ms-2" (click)="resetPassword(user.id)">
                     Reset Password
-                </button>
+                </button> -->
             </td>
         </tr>
         }

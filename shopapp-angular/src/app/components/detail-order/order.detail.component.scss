@@ -1,49 +1,174 @@
 @import '../../styles/shared-styles.scss';
 
+/* Tổng quan Container */
 .container {
-    color: white;
-}
-.confirmation-container {
-    margin: 50px auto;
+    margin-top: 70px;
     padding: 20px;
-    max-width: 600px;            
+    margin-bottom: 150px;
+    background-color: #FFF; /* Nền trắng tổng quát */
     border-radius: 10px;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
 }
+
+/* Phần giới thiệu */
+.intro-section {
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 60px;
+     /* Nền cam nhạt */
+    border-radius: 10px; /* Bo góc */
+    box-shadow: 0 4px 8px #FF6F00; /* Bóng đổ nhẹ */
+}
+
+.manage-order-title {
+    color: #000000;
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+.intro-section h1 {
+    color: #000000; /* Màu cam cho tiêu đề chính */
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.intro-section p {
+    color: #555; /* Màu xám cho mô tả */
+    font-size: 16px;
+}
+
+/* Tiêu đề phần thông tin */
+.product-header,
+.product-order {
+    color: #FF6F00; /* Cam tươi sáng */
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #FFEDD5; /* Đường gạch dưới nhẹ */
+    padding-bottom: 5px;
+}
+
+/* Thông tin chi tiết */
+.form-label {
+    color: #333; /* Màu chữ tối */
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* Bảng Sản phẩm */
+table {
+    width: 100%;
+    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    background-color: #FFF; /* Nền trắng */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+}
+
+th {
+    background-color: #FF6F00; /* Nền cam */
+    color: white; /* Chữ trắng */
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px;
+    text-align: center;
+    // border-bottom: 2px solid #FF4500; /* Viền cam đậm */
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    background-color: #FFF8E7; /* Nền cam nhạt */
+    color: #333; /* Chữ tối */
+    border-bottom: 1px solid #FFEDD5; /* Viền dưới nhạt */
+}
+
+tbody tr:nth-of-type(odd) {
+    background-color: #FFF2E0; /* Nền cam sáng cho dòng lẻ */
+}
+
+tbody tr:hover {
+    background-color: #FFE6CC; /* Nền cam sáng hơn khi hover */
+}
+
+/* Thông tin sản phẩm */
 .product-info {
     display: flex;
     align-items: center;
 }
 
 .product-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    margin-right: 10px;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px; /* Bo góc ảnh sản phẩm */
+    margin-right: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
 }
 
 .product-name {
-    color: white;
-    margin-right: 10px;
-}
-table {
-    width: 100%;
-    border-radius: 10px;
-    border: none;
-    border-collapse: separate;
-    border: 1px solid white;
-    border-spacing: 0;    
-    background-color: $shopapp-background-color;    
+    color: #333; /* Màu chữ tối */
+    font-weight: bold;
+    font-size: 16px;
 }
 
-th,
-td {
-    padding: 10px;
-    text-align: center;
+/* Tổng tiền */
+.header-text {
+    color: #FF6F00; /* Màu cam */
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 20px;
 }
+
+/* Nút Gradient */
 .btn-gradient {
-    background: linear-gradient(to right, $shopapp-tint-color, $shopapp-color);
+    background: linear-gradient(to right, #FF6F00, #FF4500); /* Gradient cam */
     color: white;
+    font-weight: bold;
     border-radius: 30px;
-    width: 200px;
+    padding: 12px 20px;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(to right, #FF4500, #FF6F00); /* Đảo ngược gradient */
+    transform: scale(1.05); /* Phóng to nhẹ */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .intro-section h1 {
+        font-size: 24px;
+    }
+
+    .product-header,
+    .product-order {
+        font-size: 20px;
+    }
+
+    .product-info {
+        flex-direction: column; /* Chuyển sản phẩm sang chiều dọc */
+        align-items: flex-start;
+    }
+
+    .product-image {
+        margin-bottom: 10px;
+    }
+
+    .btn-gradient {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
 }

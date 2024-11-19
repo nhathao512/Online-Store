@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../../../base/base.component';
+import Swal from 'sweetalert2'; // Import SweetAlert2 for popups
 
 @Component({
   selector: 'app-insert.category.admin',
@@ -24,20 +25,77 @@ export class InsertCategoryAdminComponent extends BaseComponent implements OnIni
   };
   route: ActivatedRoute = inject(ActivatedRoute);  
   categories: Category[] = []; // Dữ liệu động từ categoryService  
+
   ngOnInit() {
-    
+    // Initialize component if necessary
   }   
 
-  insertCategory() {    
-    this.categoryService.insertCategory(this.insertCategoryDTO).subscribe({
-      next: (response) => {
-        debugger
-        this.router.navigate(['/admin/categories']);        
+  // Method to insert a new category
+  insertCategory() {
+    // Kiểm tra nếu tên danh mục trống hoặc không hợp lệ
+    if (!this.insertCategoryDTO.name || this.insertCategoryDTO.name.trim() === '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Category name cannot be empty. Please enter a category name.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
+    // Trước tiên, kiểm tra nếu danh mục đã tồn tại
+    this.categoryService.checkCategoryExists(this.insertCategoryDTO.name).subscribe({
+      next: (exists) => {
+        // Log kết quả trả về từ API
+        console.log('checkCategoryExists response:', exists);
+  
+        // Kiểm tra nếu danh mục tồn tại hay không
+        if (exists.message === "Category exists") {
+          // Nếu danh mục đã tồn tại, hiển thị popup lỗi
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'This category already exists. Please choose another name!',
+          });
+        } else {
+          // Nếu danh mục chưa tồn tại, thực hiện việc thêm danh mục
+          this.categoryService.insertCategory(this.insertCategoryDTO).subscribe({
+            next: (response) => {
+              // Thông báo thành công
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'New category has been added successfully!',
+              }).then(() => {
+                // Sau khi popup thành công, điều hướng đến danh sách danh mục
+                this.router.navigate(['/admin/categories']);
+              });
+            },
+            error: (error: HttpErrorResponse) => {
+              // Xử lý lỗi khi thêm danh mục không thành công
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Unable to add category, please try again.',
+              });
+              console.error(error?.error?.message ?? '');
+            }
+          });
+        }
       },
       error: (error: HttpErrorResponse) => {
-        debugger;
+        // Log lỗi nếu có khi gọi API kiểm tra danh mục tồn tại
+        console.error('Error while checking category existence:', error);
+  
+        // Xử lý lỗi khi gọi API kiểm tra danh mục tồn tại
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Unable to check category, please try again.',
+        });
         console.error(error?.error?.message ?? '');
-      }        
-    });    
+      }
+    });
   }
+  
+  
 }

@@ -1,4 +1,4 @@
-import { Component, viewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RegisterDTO } from '../../dtos/user/register.dto';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { ApiResponse } from '../../responses/api.response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../base/base.component';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,7 @@ import { BaseComponent } from '../base/base.component';
   ]
 })
 export class RegisterComponent extends BaseComponent {
-  readonly registerForm = viewChild.required<NgForm>('registerForm');
+  @ViewChild('registerForm') registerForm: NgForm | undefined;
 
   phoneNumber: string = '';
   password: string = '';
@@ -35,12 +36,12 @@ export class RegisterComponent extends BaseComponent {
 
   constructor() {
     super();
-    // Đặt mặc định là ngày hiện tại trừ 18 năm để đảm bảo không bị lỗi tuổi
+    // Set default to current date minus 18 years to avoid age issues
     this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);
   }
 
   register() {
-    if (this.registerForm().valid) {
+    if (this.registerForm?.valid) {
       const registerDTO: RegisterDTO = {
         fullname: this.fullName,
         phone_number: this.phoneNumber,
@@ -55,16 +56,23 @@ export class RegisterComponent extends BaseComponent {
 
       this.userService.register(registerDTO).subscribe({
         next: (apiResponse: ApiResponse) => {
-          const confirmation = window.confirm('Đăng ký thành công, mời bạn đăng nhập. Bấm "OK" để chuyển đến trang đăng nhập.');
-          if (confirmation) {
-            this.router.navigate(['/login']);
-          }
+          // Instead of window.confirm, use Swal.fire for English popup
+          Swal.fire({
+            icon: 'success',
+            title: 'Registration Successful',
+            text: 'You have successfully registered. Click "OK" to go to the login page.',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/login']);
+            }
+          });
         },
         error: (error: HttpErrorResponse) => {
           this.toastService.showToast({
             error: error,
-            defaultMsg: 'Lỗi không xác định',
-            title: 'Lỗi Đăng Ký'
+            defaultMsg: 'Unknown Error',
+            title: 'Registration Error'
           });
         }
       });
@@ -77,23 +85,24 @@ export class RegisterComponent extends BaseComponent {
 
   checkPasswordsMatch() {
     if (this.password !== this.retypePassword) {
-      this.registerForm().form.controls['retypePassword'].setErrors({ 'passwordMismatch': true });
+      this.registerForm?.form.controls['retypePassword'].setErrors({ 'passwordMismatch': true });
     } else {
-      this.registerForm().form.controls['retypePassword'].setErrors(null);
+      this.registerForm?.form.controls['retypePassword'].setErrors(null);
     }
   }
-  
+
   checkFutureDate() {
     if (this.dateOfBirth) {
       const today = new Date();
       const birthDate = new Date(this.dateOfBirth);
       if (birthDate > today) {
-        this.registerForm().form.controls['dateOfBirth'].setErrors({ 'futureDate': true });
+        this.registerForm?.form.controls['dateOfBirth'].setErrors({ 'futureDate': true });
       } else {
-        this.registerForm().form.controls['dateOfBirth'].setErrors(null);
+        this.registerForm?.form.controls['dateOfBirth'].setErrors(null);
       }
     }
   }
+
   checkAge() {
     if (this.dateOfBirth) {
       const today = new Date();
@@ -102,17 +111,14 @@ export class RegisterComponent extends BaseComponent {
       const monthDiff = today.getMonth() - birthDate.getMonth();
       if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
         age--;
+      } else if (birthDate > today) {
+        this.registerForm?.form.controls['dateOfBirth'].setErrors({ 'futureDate': true });
       }
-      else if (birthDate > today) {
-        this.registerForm().form.controls['dateOfBirth'].setErrors({ 'futureDate': true });
-      } 
-      // Xóa lỗi nếu hợp lệ
       else {
-        this.registerForm().form.controls['dateOfBirth'].setErrors(null);
+        this.registerForm?.form.controls['dateOfBirth'].setErrors(null);
       }
     } else {
-      // Đặt lỗi nếu trường ngày tháng năm sinh để trống
-      this.registerForm().form.controls['dateOfBirth'].setErrors({ 'required': true });
+      this.registerForm?.form.controls['dateOfBirth'].setErrors({ 'required': true });
     }
   }
 }

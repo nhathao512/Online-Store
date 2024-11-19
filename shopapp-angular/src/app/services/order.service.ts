@@ -31,6 +31,11 @@ export class OrderService {
     return this.http.get<ApiResponse>(url, { headers: this.getAuthHeaders() });
   }
 
+  getOrdersByUserId(userId: number): Observable<ApiResponse> {
+    const url = `${environment.apiBaseUrl}/orders/user/${userId}`;  // Endpoint API
+    return this.http.get<ApiResponse>(url, { headers: this.getAuthHeaders() });
+  }
+
   getAllOrders(keyword: string, page: number, limit: number): Observable<ApiResponse> {
     const params = new HttpParams()
       .set('keyword', keyword)

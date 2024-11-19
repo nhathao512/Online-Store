@@ -1,8 +1,12 @@
 @import '../../styles/shared-styles.scss';
 
 header {
-    background-color: rgba(0, 0, 0, 0);
+    background-color: #FFF8E7;
     color: rgb(173, 178, 203);
+    position: fixed;
+    top: 0; 
+    left: 0; /* Đặt header ở phía bên trái */
+    width: 100%;
 }
 
 .navbar {
@@ -14,18 +18,18 @@ header {
 }
 
 .navbar .container .navbar-brand {
-    color: rgb(173, 178, 203);
+    color: #000000;
 }
 
 .navbar .container .navbar-nav .nav-link {
-    color: rgb(173, 178, 203);
+    color: #000000   ;
     border-radius: 18px;
     padding: 8px 16px;
 }
 
 .navbar .container .navbar-nav .nav-link.active {
     background-color: $shopapp-color !important;
-    color: white !important;
+    color: black !important;
 }
 .nav-item.active {
     background-color: $shopapp-color !important;
@@ -49,5 +53,12 @@ header {
 
 .popover-item:hover {
     background-color: #f0f0f0;
-    color: $shopapp-color;    
+    color: #7b612d;    
+}
+
+.divider {
+    height: 2px; /* Độ dày của đường */
+    // background-color: #FF6F00; /* Màu cam */
+    width: 100%; /* Chiều rộng đầy đủ */
+    box-shadow: 0 4px 8px #cfc9c4;
 }

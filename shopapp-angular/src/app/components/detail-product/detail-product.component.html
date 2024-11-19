@@ -1,8 +1,8 @@
 <app-header></app-header>
 <div class="container">
     <div class="intro-section">
-        <h1>Chi tiết sản phẩm</h1>
-        <p>Xem chi tiết ở đây</p>
+        <h1 class=" mb-2 manage-order-title">Product Details</h1>
+        
     </div>    
     <div class="row">
       <div class="col-md-6">
@@ -41,7 +41,6 @@
                   <img [src]="image.image_url" class="thumbnail-image" alt="Thumbnail Image">
                 </div>
             }
-            
           </div>
         </div>
       </div>
@@ -49,11 +48,11 @@
         <div class="product-details">
           <h2>{{ product?.name }}</h2>
           <p>{{ product?.description }}</p>
-          <p>Giá: ${{ product?.price }}</p>
-          <p>Tổng tiền: ${{ getTotalPrice() | number:'1.2-2' }}</p>
+          <p>Price: ${{ product?.price }}</p>
+          <p>Total Price: ${{ getTotalPrice() | number:'1.2-2' }}</p>
           <div class="product-actions">
-            <button class="btn btn-primary" (click)="addToCart()">Thêm vào giỏ hàng</button>
-            <button class="btn btn-success" (click)="buyNow()">Mua ngay</button>
+            <button class="btn btn-primary" (click)="addToCart()">Add to Cart</button>
+            <button class="btn btn-success" (click)="buyNow()">Buy Now</button>
           </div>
           <div class="product-quantity">
             <div class="border-wrapper">

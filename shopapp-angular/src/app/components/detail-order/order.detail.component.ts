@@ -59,6 +59,7 @@ export class OrderDetailComponent extends BaseComponent implements OnInit {
         this.orderResponse.phone_number = response.phone_number;
         this.orderResponse.address = response.address; 
         this.orderResponse.note = response.note;
+        this.orderResponse.total_money = response.total_money;
         this.orderResponse.order_date = new Date(
           response.order_date[0], 
           response.order_date[1] - 1, 
@@ -78,8 +79,8 @@ export class OrderDetailComponent extends BaseComponent implements OnInit {
             order_detail.product = order_detail.product || {};
             order_detail.product.thumbnail = 'default-image-path'; // Đường dẫn hình ảnh mặc định nếu thumbnail không tồn tại
           }
-          order_detail.number_of_products = order_detail.numberOfProducts;
-          order_detail.total_money = order_detail.totalMoney;
+          order_detail.number_of_products = order_detail.number_of_products;
+          order_detail.total_money = order_detail.total_money;
           return order_detail;
         });
         this.orderResponse.payment_method = response.payment_method;
