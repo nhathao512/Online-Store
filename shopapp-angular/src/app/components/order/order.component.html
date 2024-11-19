@@ -1,172 +1,163 @@
 <app-header></app-header>
-<div class="container">
+
+<div class="nen-order">
+
     <div class="intro-section">
-        <h1>Shopping Cart</h1>
+        <h1 class=" mb-2 manage-order-title">Shopping Cart</h1>
+        
     </div> 
-    <form [formGroup]="orderForm"> <!-- Add form and assign formGroup -->   
-    <div class="row">
-        <div class="col-md-5">
-            <h2 class="product-header">Recipient Information</h2>
-                <div class="mb-3">
-                    <label for="fullname" class="form-label">Full Name</label>
-                    <input type="text" 
-                        formControlName="fullname" 
-                        placeholder="Full Name"
-                        class="form-control" 
-                        id="fullname" 
-                        [class.is-invalid]="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched">
-                    @if(orderForm.get('fullname')!.invalid &&
-                        orderForm.get('fullname')!.touched) {
-                        <div class="invalid-feedback">
-                            Full Name is required.
+
+    <div class="container">
+
+        <div class="outer-wrapper">
+            <form [formGroup]="orderForm">
+                <div class="row">
+                    <!-- Recipient Information -->
+                    <div class="col-md-5">
+                        <table class="table-title">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <h2>Recipient Information</h2>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="mb-3">
+                            <label for="fullname" class="form-label">Full Name</label>
+                            <input type="text" formControlName="fullname" placeholder="Full Name" class="form-control"
+                                id="fullname"
+                                [class.is-invalid]="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched">
+                            @if(orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched) {
+                            <div class="invalid-feedback">Full Name is required.</div>
+                            }
                         </div>
-                    }                        
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="text" 
-                        formControlName="email" 
-                        placeholder="Email"
-                        class="form-control" 
-                        id="email" 
-                        [class.is-invalid]="orderForm.get('email')!.invalid && orderForm.get('email')!.touched">
-                    @if(orderForm.get('email')!.invalid 
-                        && orderForm.get('email')!.touched) {
-                            <div
-                                class="invalid-feedback">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" formControlName="email" placeholder="Email" class="form-control"
+                                id="email"
+                                [class.is-invalid]="orderForm.get('email')!.invalid && orderForm.get('email')!.touched">
+                            @if(orderForm.get('email')!.invalid && orderForm.get('email')!.touched) {
+                            <div class="invalid-feedback">
                                 {{ orderForm.get('email')!.hasError('email') ? 'Invalid email' : 'Email is required' }}
                             </div>
-                        }
-                    
-                </div>
-                
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Phone Number</label>
-                    <input type="text" 
-                        class="form-control" 
-                        formControlName="phone_number"                         
-                        placeholder="Phone Number" 
-                        required
-                        id="phone" 
-                        [class.is-invalid]="orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched">
-                        @if(orderForm.get('phone_number')!.invalid 
-                            && orderForm.get('phone_number')!.touched) {
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" formControlName="phone_number"
+                                placeholder="Phone Number" id="phone"
+                                [class.is-invalid]="orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched">
+                            @if(orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched) {
                             <div class="invalid-feedback">
                                 Phone number is required and must be at least 10 characters.
                             </div>
-                        }                        
-                </div>
-                <div class="mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <input type="text" 
-                        class="form-control" 
-                        formControlName="address"                         
-                        placeholder="Address" 
-                        required
-                        id="address" 
-                        [class.is-invalid]="orderForm.get('address')!.invalid && orderForm.get('address')!.touched">
-                    @if(orderForm.get('address')!.invalid 
-                        && orderForm.get('address')!.touched) {
-                    <div class="invalid-feedback">
-                        Address is required and must be at least 5 characters.
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" formControlName="address" placeholder="Address"
+                                id="address"
+                                [class.is-invalid]="orderForm.get('address')!.invalid && orderForm.get('address')!.touched">
+                            @if(orderForm.get('address')!.invalid && orderForm.get('address')!.touched) {
+                            <div class="invalid-feedback">Address is required.</div>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Notes</label>
+                            <input type="text" class="form-control" formControlName="note" placeholder="Notes"
+                                id="note">
+                        </div>
+                        <div class="mb-3">
+                            <label for="shippingMethod" class="form-label">Shipping Method</label>
+                            <select class="form-control" id="shippingMethod" formControlName="shipping_method">
+                                <option value="express">Express</option>
+                                <option value="normal">Normal</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="paymentMethod" class="form-label">Payment Method</label>
+                            <select class="form-control" id="paymentMethod" formControlName="payment_method">
+                                <option value="cod">Cash on Delivery (COD)</option>
+                                <option value="other">Other Payment Methods</option>
+                            </select>
+                        </div>
                     </div>
-                    }
-                    
-                </div>
-                <div class="mb-3">
-                    <label for="note" class="form-label">Notes</label>
-                    <input type="text" 
-                        class="form-control" 
-                        formControlName="note"                                                 
-                        placeholder="Notes" 
-                        required
-                        id="note">
-                </div>
-                <div class="mb-3">
-                    <label for="shippingMethod">Shipping Method</label>
-                    <select class="form-control" id="shippingMethod" 
-                        formControlName="shipping_method">
-                        <option value="express">Express</option>
-                        <option value="normal">Normal</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="paymentMethod">Payment Method</label>
-                    <select class="form-control" id="paymentMethod"
-                        formControlName="payment_method">                     
-                        <option value="cod">Cash on Delivery (COD)</option>
-                        <option value="other">Other Payment Methods</option>
-                    </select>
-                </div>
-            <!-- </form> -->
-        </div>        
-        <div class="col-md-7">
-            <h2 class="product-order">Products in the Cart</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor="let item of cartItems; let i = index">
-                      <tr>
-                        <td>
-                          <div class="product-info">
-                            <img [src]="item.product.thumbnail" alt="Product Image" class="product-image">
-                            <span class="product-name">{{ item.product.name }}</span>
-                          </div>
-                        </td>
-                        <td>${{ item.product.price | number:'1.2-2' }}</td>
-                        <td>
-                          <div class="product-quantity">
-                            <div class="border-wrapper">
-                              <button (click)="decreaseQuantity(i)">-</button>
-                              {{ item.quantity }}
-                              <button (click)="increaseQuantity(i)">+</button>
+
+                    <!-- Products in the Cart -->
+                    <div class="col-md-7">
+                        <table class="table-title">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <h2>Products in the Cart</h2>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let item of cartItems; let i = index">
+                                    <tr>
+                                        <td>
+                                            <div class="product-info">
+                                                <img [src]="item.product.thumbnail" alt="Product Image"
+                                                    class="product-image">
+                                                <span class="product-name">{{ item.product.name }}</span>
+                                            </div>
+                                        </td>
+                                        <td>${{ item.product.price | number:'1.2-2' }}</td>
+                                        <td>
+                                            <div class="product-quantity">
+                                                <div class="border-wrapper">
+                                                    <button (click)="decreaseQuantity(i)">-</button>
+                                                    {{ item.quantity }}
+                                                    <button (click)="increaseQuantity(i)">+</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>${{ (item.product.price * item.quantity) | number:'1.2-2' }}</td>
+                                        <td>
+                                            <button class="btn btn-danger" (click)="confirmDelete(i)">Delete</button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                        <div class="text-start mt-3">
+                            <h4 class="header-text text-end">Total Price: {{ totalAmount | number:'1.2-2'}} $</h4>
+                        </div>
+                        <div class="mt-3">
+                            <h4 class="product-header">Enter Coupon</h4>
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="couponCode"
+                                    placeholder="Enter Coupon">
+                                <button (click)="applyCoupon()" class="btn btn-gradient" type="button">Apply</button>
                             </div>
-                          </div>
-                        </td>
-                        <td>${{ (item.product.price * item.quantity) | number:'1.2-2' }}</td>
-                        <td>
-                          <button class="btn btn-danger" (click)="confirmDelete(i)">
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    </ng-container>
-                  </tbody>
-              
-        </table>   
-            <div class="text-start mt-3">
-                <h4 class="header-text text-end ">Total Price: {{ totalAmount | number:'1.2-2'}} $</h4>
-            </div>
-            <div class="mt-3">
-                <h4 class="product-header">Enter Coupon</h4>
-                <div class="input-group">
-                    <input type="text" class="form-control" 
-                        formControlName="couponCode" 
-                        placeholder="Enter Coupon">
-                    <button 
-                        (click)="applyCoupon()"
-                        class="btn btn-gradient" type="button">Apply</button>
+                        </div>
+                        @if(couponDiscount > 0) {
+                        <div class="text-start mt-3">
+                            <h6 class="header-text text-end">You get a discount of: {{ couponDiscount | number:'1.2-2'
+                                }} VND</h6>
+                        </div>
+                        }
+                        <div class="text-start mt-3">
+                            <button (click)="placeOrder()" class="btn btn-gradient" type="button">Place Order</button>
+                        </div>
+                    </div>
                 </div>
-            </div>    
-            @if(couponDiscount > 0) {
-                <div class="text-start mt-3">
-                    <h6 class="header-text text-end ">You get a discount of: {{ couponDiscount | number:'1.2-2'}} VND</h6>
-                </div>
-            }
-            <div class="text-start mt-3">
-                <button 
-                    (click)="placeOrder()"
-                    class="btn btn-gradient" type="button">Place Order</button>
-            </div>
+            </form>
         </div>
-    </div>   
-</form> 
+    </div>
 </div>
+
 <app-footer></app-footer>

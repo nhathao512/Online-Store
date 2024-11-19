@@ -32,35 +32,24 @@ export class DetailProductComponent extends BaseComponent implements OnInit {
   isPressedAddToCart: boolean = false;  
 
   ngOnInit() {
-    // Get productId from the URL      
     const idParam = this.activatedRoute.snapshot.paramMap.get('id');
-    debugger
-    //this.cartService.clearCart();
-    //const idParam = 9 //temporary fake value
     if (idParam !== null) {
       this.productId = +idParam;
     }
+
     if (!isNaN(this.productId)) {
       this.productService.getDetailProduct(this.productId).subscribe({
         next: (apiResponse: ApiResponse) => {
-          // Get the list of product images and change their URL
-          const response = apiResponse.data
-          debugger
+          const response = apiResponse.data;
           if (response.product_images && response.product_images.length > 0) {
             response.product_images.forEach((product_image: ProductImage) => {
               product_image.image_url = `${environment.apiBaseUrl}/products/images/${product_image.image_url}`;
             });
           }
-          debugger
-          this.product = response
-          // Start with the first image
+          this.product = response;
           this.showImage(0);
         },
-        complete: () => {
-          debugger;
-        },
         error: (error: HttpErrorResponse) => {
-          debugger;
           console.error(error?.error?.message ?? '');
         }
       });
@@ -70,55 +59,57 @@ export class DetailProductComponent extends BaseComponent implements OnInit {
   }
 
   showImage(index: number): void {
-    debugger
     if (this.product && this.product.product_images &&
       this.product.product_images.length > 0) {
-      // Ensure the index is within a valid range        
       if (index < 0) {
         index = 0;
       } else if (index >= this.product.product_images.length) {
         index = this.product.product_images.length - 1;
       }
-      // Set the current index and update the displayed image
       this.currentImageIndex = index;
     }
   }
 
   thumbnailClick(index: number) {
-    debugger
-    // Called when a thumbnail is clicked
     this.currentImageIndex = index; // Update currentImageIndex
   }
 
   nextImage(): void {
-    debugger
     this.showImage(this.currentImageIndex + 1);
   }
 
   previousImage(): void {
-    debugger
     this.showImage(this.currentImageIndex - 1);
   }
 
   addToCart(): void {
+    const userId = this.tokenService.getUserId(); // Check if userId exists
+
+    if (!userId) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Please log in',
+        text: 'You need to log in to add products to the cart.',
+      }).then(() => {
+        this.router.navigate(['/login']); // Navigate to login page
+      });
+      return;
+    }
+
     this.isPressedAddToCart = true;
     if (this.product) {
       this.cartService.addToCart(this.product.id, this.quantity);
-  
-      // Show popup when the product is added to the cart successfully
       Swal.fire({
         icon: 'success',
         title: 'Added to cart successfully!',
         text: 'The product has been added to your cart.',
       });
     } else {
-      // Handle the case where the product is null
       console.error('Cannot add product to cart because the product is null.');
     }
   }
 
   increaseQuantity(): void {
-    debugger
     this.quantity++;
   }
 
@@ -136,6 +127,19 @@ export class DetailProductComponent extends BaseComponent implements OnInit {
   }
 
   buyNow(): void {
+    const userId = this.tokenService.getUserId(); // Check if userId exists
+
+    if (!userId) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Please log in',
+        text: 'You need to log in to proceed with the purchase.',
+      }).then(() => {
+        this.router.navigate(['/login']); // Navigate to login page
+      });
+      return;
+    }
+
     if (this.isPressedAddToCart == false) {
       this.addToCart();
     }

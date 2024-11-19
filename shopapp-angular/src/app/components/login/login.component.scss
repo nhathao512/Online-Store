@@ -5,68 +5,97 @@ input:focus {
     outline: none; /* Bỏ viền ngoài (outline) mặc định */
     box-shadow: none; /* Bỏ hiệu ứng sáng (box-shadow) khi focus */
     border-color: transparent; /* Tắt màu viền khi focus */
-  }
-  
+}
+
+.nen-login {
+    background-image: url('https://png.pngtree.com/thumb_back/fw800/back_our/20190628/ourmid/pngtree-orange-background-picture-image_280963.jpg');
+    background-size: cover; /* Đảm bảo hình ảnh phủ kín toàn bộ phần tử */
+    background-position: center; /* Canh giữa hình ảnh */
+    background-repeat: no-repeat; /* Ngừng lặp lại hình ảnh */
+    background-attachment: fixed; 
+}
 
 .container {
-    color: white;
-    height: 100vh;
-}
-.login-form {
-    background-color: $shopapp-background-color;
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 80px;
-    margin-bottom: 50px;
-    max-width: 500px;
-    border: 1px solid rgb(32, 34, 60);
-    align-items: center;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7; /* Màu nền nhẹ nhàng cho toàn bộ trang */
+}
+
+.login-form {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 120px;
+    margin-bottom: 100px;
+    max-width: 450px;
+    border: 1px solid #f7a500;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Tạo bóng đổ nhẹ cho form */
     flex-direction: column;
     align-items: center;
 }
+
 .login-header {
     text-align: center;
-    color: $shopapp-title-color;
+    color: #f7a500; /* Màu cam sáng cho tiêu đề */
+    font-size: 24px;
+    font-weight: 600;
     margin-bottom: 20px;
 }
+
 .form-control {
     background-color: transparent;
-    border: none;
-    color: white;
+    border: 1px solid #f7a500; /* Đổi màu viền thành cam */
+    border-radius: 8px;
+    padding: 10px;
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 15px;
+    width: 100%;
+    transition: border-color 0.3s ease-in-out;
 }
+
 .form-control:focus {
-    color: white;
-    background-color: transparent;
-    border-color: transparent;    
+    border-color: #ff6f00; /* Màu cam đậm khi focus */
+    outline: none;
 }
-  
+
+.form-control::placeholder {
+    color: #f7a500; /* Màu cam cho placeholder */
+    opacity: 0.6;
+}
+
+/* Các hiệu ứng cho divider */
 .divider-nospace {
-    border-top: 1px solid white;
+    border-top: 1px solid #f7a500;
+    margin: 20px 0;
 }
 
 .password-field {
     position: relative;
 }
+
 .password-toggle {
     position: absolute;
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
-    color: $shopapp-title-color;
+    color: #f7a500;
     cursor: pointer;
 }
+
 .checkbox-text {
-    color: rgb(243, 165, 42);
+    color: #f7a500;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
 }
-/* Màu checkbox khi được chọn */
+
 .checkbox-text input[type="checkbox"]:checked {
-    border-color: white;
-    background-color: $shopapp-tint-color;
+    border-color: #fff;
+    background-color: #f7a500; /* Màu cam khi checkbox được chọn */
 }
 
 .form-check-input {
@@ -74,76 +103,83 @@ input:focus {
 }
 
 .register-link {
-    color: $shopapp-title-color;
+    color: #f7a500;
     text-decoration: none;
+    font-weight: bold;
 }
+
 .access-right {
     margin-top: 20px;
-    width: 200px;
+    width: 100%;
     color: white;
-    background-color: $shopapp-background-color !important;
-    border: 1px solid $shopapp-tint-color;
+    background-color: #f7a500;
+    border: 1px solid #f7a500;
+    padding: 10px;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 16px;
 }
 
 .access-right:focus {
-    border: 1px solid $shopapp-tint-color;
-}
-
-.form-control::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgba(243, 165, 42, 0.4);
-    opacity: 1;
-    /* Firefox */
-}
-
-.form-control:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: rgba(243, 165, 42, 0.4);
-}
-
-.form-control::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: rgba(243, 165, 42, 0.4);
+    border-color: #ff6f00; /* Màu cam đậm khi focus */
 }
 
 .login-button {
-    background: linear-gradient(to right, $shopapp-tint-color, $shopapp-tint-color);
+    background: linear-gradient(to right, #f7a500, #ff6f00); /* Màu cam gradient */
     color: white;
     border-radius: 30px;
     width: 100%;
-    padding: 10px 0;
+    padding: 12px 0;
     margin-top: 20px;
     border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
 }
+
+.login-button:hover {
+    background: linear-gradient(to right, #ff6f00, #f7a500); /* Đảo ngược gradient khi hover */
+}
+
 .divider {
     height: 1px;
-    background-color: rgb(243, 165, 42);
-    /* background-color: rgb(105, 244, 181) */
-    margin: 20px;
+    background-color: #f7a500;
+    margin: 20px 0;
 }
 
 .social-login-buttons {
     display: flex;
-  }
-  
-  .social-button {
+    justify-content: space-between;
+    width: 100%;
+}
+
+.social-button {
     flex: 1;
     margin: 5px;
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 8px; /* Thêm thuộc tính này để bo viền */
-  }
-  
-  .google-button {
+    border-radius: 8px;
+    text-align: center;
+    transition: background 0.3s ease-in-out;
+}
+
+.google-button {
     background-color: #db4437; /* Màu đỏ của Google */
     color: white;
     border: none;
-  }
-  
-  .facebook-button {
+}
+
+.google-button:hover {
+    background-color: #c1351d; /* Đổi màu khi hover */
+}
+
+.facebook-button {
     background-color: #4267B2; /* Màu xanh của Facebook */
     color: white;
     border: none;
-  }
-  
+}
+
+.facebook-button:hover {
+    background-color: #365899; /* Đổi màu khi hover */
+}

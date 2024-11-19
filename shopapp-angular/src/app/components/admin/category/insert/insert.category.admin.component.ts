@@ -32,6 +32,16 @@ export class InsertCategoryAdminComponent extends BaseComponent implements OnIni
 
   // Method to insert a new category
   insertCategory() {
+    // Kiểm tra nếu tên danh mục trống hoặc không hợp lệ
+    if (!this.insertCategoryDTO.name || this.insertCategoryDTO.name.trim() === '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Category name cannot be empty. Please enter a category name.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
     // Trước tiên, kiểm tra nếu danh mục đã tồn tại
     this.categoryService.checkCategoryExists(this.insertCategoryDTO.name).subscribe({
       next: (exists) => {
@@ -39,12 +49,12 @@ export class InsertCategoryAdminComponent extends BaseComponent implements OnIni
         console.log('checkCategoryExists response:', exists);
   
         // Kiểm tra nếu danh mục tồn tại hay không
-        if (exists.message == "Category exists") {
+        if (exists.message === "Category exists") {
           // Nếu danh mục đã tồn tại, hiển thị popup lỗi
           Swal.fire({
             icon: 'error',
-            title: 'Lỗi',
-            text: 'Danh mục này đã tồn tại. Vui lòng chọn tên khác!',
+            title: 'Error',
+            text: 'This category already exists. Please choose another name!',
           });
         } else {
           // Nếu danh mục chưa tồn tại, thực hiện việc thêm danh mục
@@ -53,8 +63,8 @@ export class InsertCategoryAdminComponent extends BaseComponent implements OnIni
               // Thông báo thành công
               Swal.fire({
                 icon: 'success',
-                title: 'Thành công',
-                text: 'Danh mục đã được thêm mới thành công!',
+                title: 'Success',
+                text: 'New category has been added successfully!',
               }).then(() => {
                 // Sau khi popup thành công, điều hướng đến danh sách danh mục
                 this.router.navigate(['/admin/categories']);
@@ -64,8 +74,8 @@ export class InsertCategoryAdminComponent extends BaseComponent implements OnIni
               // Xử lý lỗi khi thêm danh mục không thành công
               Swal.fire({
                 icon: 'error',
-                title: 'Lỗi',
-                text: 'Không thể thêm danh mục, vui lòng thử lại.',
+                title: 'Error',
+                text: 'Unable to add category, please try again.',
               });
               console.error(error?.error?.message ?? '');
             }
@@ -79,8 +89,8 @@ export class InsertCategoryAdminComponent extends BaseComponent implements OnIni
         // Xử lý lỗi khi gọi API kiểm tra danh mục tồn tại
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: 'Không thể kiểm tra danh mục, vui lòng thử lại.',
+          title: 'Error',
+          text: 'Unable to check category, please try again.',
         });
         console.error(error?.error?.message ?? '');
       }

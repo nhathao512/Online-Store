@@ -9,6 +9,7 @@ import { ApiResponse } from '../../responses/api.response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BaseComponent } from '../base/base.component';
 import { OrderService } from '../../services/order.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-order-management',
@@ -44,7 +45,7 @@ export class OrderManagementComponent extends BaseComponent implements OnInit {
         if (apiResponse.status === 'OK') {
           const response = apiResponse.data;
           console.log(response);
-          
+  
           // Sắp xếp đơn hàng theo id từ lớn nhất tới bé nhất (đơn mới nhất lên đầu)
           this.orders = response.map((order: any) => {
             order.order_date = this.convertToVietnamTime(new Date(order.order_date));
@@ -56,9 +57,22 @@ export class OrderManagementComponent extends BaseComponent implements OnInit {
           });
   
           // Sắp xếp theo ID từ lớn nhất tới bé nhất
-          this.orders.sort((a, b) => b.id - a.id);  // Chú ý: dùng 'b.id - a.id' để sắp xếp giảm dần
+          this.orders.sort((a, b) => b.id - a.id);
   
-          this.loading = false;  // Đặt trạng thái loading là false sau khi dữ liệu được tải xong
+          if (this.orders.length === 0) {
+            // Hiển thị popup nếu không có đơn hàng
+            Swal.fire({
+              icon: 'info',
+              title: 'No Orders Found',
+              text: 'You do not have any orders yet.',
+              confirmButtonText: 'OK', // Nút "OK"
+              allowOutsideClick: false // Không cho phép đóng popup bằng cách click bên ngoài
+            }).then(() => {
+              this.router.navigate(['/']); // Chuyển hướng về trang home sau khi nhấn "OK"
+            });
+          }
+  
+          this.loading = false; // Đặt trạng thái loading là false sau khi dữ liệu được tải xong
         } else {
           this.error = 'Không thể lấy danh sách đơn hàng.';
           this.loading = false;
@@ -71,5 +85,4 @@ export class OrderManagementComponent extends BaseComponent implements OnInit {
       }
     });
   }
-  
 }

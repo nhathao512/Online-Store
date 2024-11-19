@@ -51,6 +51,8 @@ export class OrderComponent extends BaseComponent implements OnInit {
     cart_items: []
   };
 
+  couponUsed: boolean = false;
+
   constructor() {
     super();
     this.orderForm = this.formBuilder.group({
@@ -219,18 +221,52 @@ export class OrderComponent extends BaseComponent implements OnInit {
 
   applyCoupon(): void {
     const couponCode = this.orderForm.get('couponCode')!.value;
+  
+    if (this.couponUsed) {
+      // If coupon has already been used, show error
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'You have already used this coupon.'
+      });
+      return;
+    }
+  
+    if (this.totalAmount < 100) {
+      // Show a warning if the total amount is below 100
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'Total order must be at least $100 to apply coupon. Please add more items to your cart.'
+      });
+      return;
+    }
+  
     if (!this.couponApplied && couponCode) {
-      this.calculateTotal();
+      this.calculateTotal(); // Ensure total is calculated first
       this.couponService.calculateCouponValue(couponCode, this.totalAmount)
         .subscribe({
           next: (apiResponse: ApiResponse) => {
-            this.totalAmount = apiResponse.data;
-            this.couponApplied = true;
-            Swal.fire({
-              icon: 'success',
-              title: 'Success',
-              text: 'Coupon applied successfully.'
-            });
+            // Assuming apiResponse.data contains the result object
+            if (apiResponse.data && apiResponse.data.result !== undefined) {
+              // Access the result value and assign it to totalAmount
+              this.totalAmount = apiResponse.data.result; // This is the numeric value you need
+              this.couponApplied = true;
+              this.couponUsed = true; // Mark the coupon as used
+  
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Coupon applied successfully.'
+              });
+            } else {
+              // If no result is found, show an error
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Invalid coupon code or response data error.'
+              });
+            }
           },
           error: () => {
             Swal.fire({
@@ -242,6 +278,7 @@ export class OrderComponent extends BaseComponent implements OnInit {
         });
     }
   }
+  
 
   private updateCartFromCartItems(): void {
     this.cart.clear();

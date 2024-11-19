@@ -1,6 +1,7 @@
 <app-header></app-header>
 
-<div class="container">
+<div class="nen-register">
+  <div >
     <form #registerForm="ngForm" (ngSubmit)="register()">
       <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -32,7 +33,6 @@
                      minlength="3"
                      #pass="ngModel"
                      id="password">
-              <i class="password-toggle fas" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePassword()"></i>
               <div class="divider-nospace"></div>
               <p class="text-danger" *ngIf="pass.invalid && pass.touched">Password must be at least 3 characters</p>
             </div>
@@ -48,7 +48,6 @@
                      #retypePass="ngModel"
                      id="retype-password"
                      (input)="checkPasswordsMatch()">
-              <i class="password-toggle fas" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePassword()"></i>
               <div class="divider-nospace"></div>
               <p class="text-danger" *ngIf="retypePass.invalid && retypePass.touched">Password must be at least 3 characters</p>
               <p class="text-danger" *ngIf="password !== retypePassword && retypePass.touched">Passwords do not match</p>
@@ -105,5 +104,7 @@
       </div>
     </form>
 </div>
+</div>
+
 
 <app-footer></app-footer>

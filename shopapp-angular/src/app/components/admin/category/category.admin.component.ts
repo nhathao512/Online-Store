@@ -41,8 +41,8 @@ export class CategoryAdminComponent extends BaseComponent implements OnInit {
         // Hiển thị thông báo lỗi khi không thể tải danh mục
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: 'Không thể tải danh mục, vui lòng thử lại.',
+          title: 'Error',
+          text: 'Unable to load catalog, please try again.',
         });
         console.error(error?.error?.message ?? '');
       }
@@ -69,12 +69,12 @@ export class CategoryAdminComponent extends BaseComponent implements OnInit {
   // Confirm and delete category with SweetAlert2 confirmation dialog
   deleteCategory(category: Category) {
     Swal.fire({
-      title: 'Bạn có chắc chắn muốn xóa danh mục này?',
-      text: 'Hành động này không thể hoàn tác!',
+      title: 'Are you sure you want to delete this category?',
+      text: 'This action cannot be undone!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Đúng, xóa!',
-      cancelButtonText: 'Hủy',
+      confirmButtonText: 'Yes, delete!',
+      cancelButtonText: 'Cancel',
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
@@ -83,8 +83,8 @@ export class CategoryAdminComponent extends BaseComponent implements OnInit {
             // Success notification after deleting the category
             Swal.fire({
               icon: 'success',
-              title: 'Thành công',
-              text: 'Danh mục đã được xóa thành công.',
+              title: 'Success',
+              text: 'The category has been successfully deleted.',
             }).then(() => {
               location.reload(); // Reload page to reflect the changes
             });
@@ -93,8 +93,8 @@ export class CategoryAdminComponent extends BaseComponent implements OnInit {
             // Error notification for failed deletion
             Swal.fire({
               icon: 'error',
-              title: 'Lỗi',
-              text: 'Xóa danh mục thất bại, vui lòng thử lại.',
+              title: 'Error',
+              text: 'Category deletion failed, please try again.',
             });
             console.error(error?.error?.message ?? '');
           }

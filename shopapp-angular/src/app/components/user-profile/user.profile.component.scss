@@ -1,32 +1,165 @@
 @import '../../styles/shared-styles.scss';
 
+/* Tổng quan Container */
 .container {
     color: white;
-}
-.intro-section {
-    color: white;
+    margin-top: 100px;
     padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #FF6F00;
+    background-color: #FFF8E7; /* Nền trắng */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+}
+
+/* Phần giới thiệu */
+.intro-section {
     text-align: center;
+    margin-bottom: 30px;
 }
+
+.intro-section h1 {
+    color: #FF6F00; /* Màu cam cho tiêu đề */
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.intro-section p {
+    color: #555; /* Màu xám cho mô tả */
+    font-size: 16px;
+}
+
+/* Header sản phẩm */
 .product-header {
-    color: $shopapp-tint-color;
+    color: #FF6F00; /* Màu cam sáng */
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #FFEDD5; /* Đường gạch dưới cam nhạt */
+    padding-bottom: 5px;
 }
+
+/* Form nhập liệu */
 .form-control {
-    background-color: $shopapp-background-color;
-    border: 1px solid rgb(29, 33, 54);
-    color: white;
+    background-color: rgba(255, 255, 255, 0.1); /* Nền trắng nhẹ */
+    border: 1px solid #FF6F00; /* Viền cam */
+    color: #333; /* Màu chữ tối */
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    margin-bottom: 15px;
 }
 
 .form-control:focus {
-    border-color: white;
-    background-color: $shopapp-background-color;
+    border-color: #FF4500; /* Cam đậm khi focus */
+    background-color: rgba(255, 255, 255, 0.2); /* Nền sáng hơn khi focus */
+    outline: none;
 }
+
+/* Nhãn của form */
 .form-label {
-    color: white;
+    color: #FF6F00; /* Màu cam */
+    font-size: 16px;
+    
+    margin-bottom: 10px;
+    font-weight: bold;
 }
-.product-header {
-    color: white;
+
+/* Phần Thông tin Cá nhân */
+.personal-info {
+    margin-bottom: 30px;
 }
-.product-order {
-    color: $shopapp-title-color;
+
+.personal-info h2 {
+    color: #FF6F00; /* Màu cam sáng */
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Bảng thông tin */
+table {
+    width: 100%;
+    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    background-color: #FFF; /* Nền trắng */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+}
+
+th {
+    background-color: #FF6F00; /* Nền cam */
+    color: white; /* Chữ trắng */
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 2px solid #FF4500; /* Viền cam đậm */
+}
+
+td {
+    padding: 10px;
+    text-align: left;
+    background-color: #FFF8E7; /* Nền cam nhạt */
+    color: #333; /* Màu chữ tối */
+    border-bottom: 1px solid #FFEDD5; /* Viền dưới nhạt */
+}
+
+tbody tr:nth-of-type(odd) {
+    background-color: #FFF2E0; /* Nền cam sáng cho dòng lẻ */
+}
+
+tbody tr:hover {
+    background-color: #FFE6CC; /* Nền cam sáng hơn khi hover */
+}
+
+/* Nút Gradient */
+.btn-gradient {
+    background: linear-gradient(to right, #FF6F00, #FF4500); /* Gradient cam */
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+    padding: 12px 20px;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+    width: 200px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(to right, #FF4500, #FF6F00); /* Đảo ngược gradient */
+    transform: scale(1.05); /* Phóng to nhẹ */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .intro-section h1 {
+        font-size: 24px;
+    }
+
+    .product-header {
+        font-size: 20px;
+    }
+
+    .btn-gradient {
+        font-size: 14px;
+        padding: 10px 15px;
+        width: 100%; /* Nút full width trên màn hình nhỏ */
+    }
+
+    .form-control {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+.btn {
+    background-color: #ff6f00;
+    color: #FFE6CC;
 }

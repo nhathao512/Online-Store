@@ -42,8 +42,8 @@ export class InsertProductAdminComponent extends BaseComponent implements OnInit
       error: () => {
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: 'Không thể tải danh mục, vui lòng thử lại sau.',
+          title: 'Error',
+          text: 'Unable to load catalog, please try again later.',
         });
       }
     });
@@ -54,8 +54,8 @@ export class InsertProductAdminComponent extends BaseComponent implements OnInit
     if (files.length > 5) {
       Swal.fire({
         icon: 'warning',
-        title: 'Cảnh báo',
-        text: 'Vui lòng chọn tối đa 5 ảnh.',
+        title: 'Warning',
+        text: 'Please select up to 5 photos.',
       });
       return;
     }
@@ -63,12 +63,59 @@ export class InsertProductAdminComponent extends BaseComponent implements OnInit
   }
 
   insertProduct() {
+    // Kiểm tra nếu các trường bắt buộc không có giá trị hoặc không hợp lệ
+    if (!this.insertProductDTO.name || this.insertProductDTO.name.trim() === '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Product name cannot be blank. Please enter product name.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
+    if (this.insertProductDTO.price <= 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Product price must be greater than 0. Please enter a valid price.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
+    if (!this.insertProductDTO.description || this.insertProductDTO.description.trim() === '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Product description cannot be empty. Please enter a description.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
+    if (!this.insertProductDTO.category_id || this.insertProductDTO.category_id <= 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Invalid product category. Please select a category.',
+      });
+      return; // Dừng hàm nếu dữ liệu không hợp lệ
+    }
+  
+    if (this.insertProductDTO.images.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please select at least one photo for the product.',
+      });
+      return; // Dừng hàm nếu chưa chọn ảnh
+    }
+  
+    // Nếu các trường hợp trên đều hợp lệ, thực hiện thêm sản phẩm
     this.productService.insertProduct(this.insertProductDTO).subscribe({
       next: (apiResponse: ApiResponse) => {
         Swal.fire({
           icon: 'success',
-          title: 'Thành công',
-          text: 'Sản phẩm đã được thêm thành công.',
+          title: 'Success',
+          text: 'The product has been added successfully.',
         }).then(() => {
           if (this.insertProductDTO.images.length > 0) {
             const productId = apiResponse.data.id;
@@ -76,8 +123,8 @@ export class InsertProductAdminComponent extends BaseComponent implements OnInit
               next: () => {
                 Swal.fire({
                   icon: 'success',
-                  title: 'Thành công',
-                  text: 'Ảnh đã được tải lên thành công.',
+                  title: 'Success',
+                  text: 'The photo has been uploaded successfully.',
                 }).then(() => {
                   this.router.navigate(['../'], { relativeTo: this.activatedRoute });
                 });
@@ -85,8 +132,8 @@ export class InsertProductAdminComponent extends BaseComponent implements OnInit
               error: () => {
                 Swal.fire({
                   icon: 'error',
-                  title: 'Lỗi',
-                  text: 'Tải lên ảnh thất bại, vui lòng thử lại sau.',
+                  title: 'Error',
+                  text: 'Photo upload failed, please try again later.',
                 });
               }
             });
@@ -98,10 +145,10 @@ export class InsertProductAdminComponent extends BaseComponent implements OnInit
       error: () => {
         Swal.fire({
           icon: 'error',
-          title: 'Lỗi',
-          text: 'Thêm sản phẩm thất bại, vui lòng thử lại sau.',
+          title: 'Error',
+          text: 'Adding product failed, please try again later.',
         });
       }
     });
-  }
+  }  
 }

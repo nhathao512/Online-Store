@@ -45,6 +45,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();
       this.userResponse = this.userService.getUserResponseFromLocalStorage();
+      this.router.navigate([`/login`]);
     }
     this.isPopoverOpen = false; // Close the popover after clicking an item 
 }
