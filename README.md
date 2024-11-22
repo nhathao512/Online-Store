@@ -23,6 +23,8 @@ http://localhost:4300/
 http://localhost:8100/
 
 ## Tác giả 
-<li>Võ Nhật Hào</li>
-<li>Đặng Thành Nhân</li>
-<li>Nguyễn Thành Nhân</li>
+* [Võ Nhật Hào](https://github.com/nhathao512)
+
+* [Đặng Thành Nhân](https://github.com/nhandang02)
+
+* [Nguyễn Thành Nhân](https://github.com/thanhnhanzxc)
