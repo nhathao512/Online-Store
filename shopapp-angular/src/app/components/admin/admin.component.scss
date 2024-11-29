@@ -1,39 +1,127 @@
+/* General styling for the entire container */
 .container-fluid {
-    background-color: white;
-    padding-left: 0 !important; /* Remove left padding */
-    padding-right: 0 !important; /* Remove right padding */
+    background-color: #f5f5f5; /* Light background color */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
+
+/* Header style */
 .header {
-    background-color: #333;
-    /* Header background color */
+    background-color: #333; /* Dark background for header */
     color: white;
-    /* Text color */
-    padding: 10px;
-    /* Add padding to the header */
-    text-align: center;
-    /* Center-align text in the header */
+    font-size: 1.5rem;
+    padding: 15px 20px;
+    position: fixed; /* Fixed position */
+    top: 0; /* Position it at the top */
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure it stays above other content */
 }
+
+.header-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+button.btn-outline-danger {
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+button.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+/* Sidebar styles */
 #sidebar {
-    background-color: #007bff !important; /* Primary color */
-    color: white; /* Text color */
+    background-color: #343a40; /* Dark background for sidebar */
+    color: white;
     height: 100vh;
-    overflow-y: auto; /* Add scrollbars if content overflows */
+    padding-top: 20px;
+    position: fixed;
+    width: 220px;
+    top: 60px; /* Make room for the fixed header */
 }
-/* Custom CSS for sidebar links */
-#sidebar a {
-    color: white; /* Text color for links */
-    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Add a border line at the top of each link */
-    padding: 10px 15px; /* Add padding to links for spacing */
+
+/* Sidebar header */
+.sidebar-header {
+    padding: 15px;
+    border-bottom: 1px solid #444;
 }
-/* Custom CSS for active link */
-#sidebar a.active {
-    font-weight: bold; /* Highlight active link */
-    background-color: #0056b3;
+
+.sidebar-title {
+    font-size: 1.25rem;
+    color: #f8f9fa;
 }
-/* Change background color on hover */
-#sidebar a:hover {
-    background-color: #0056b3; /* Change the background color on hover */
+
+/* Sidebar menu items */
+.sidebar-menu .nav-item {
+    margin: 10px 0;
 }
+
+.sidebar-menu .nav-link {
+    color: #ced4da;
+    font-size: 1rem;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.sidebar-menu .nav-link:hover {
+    background-color: #495057;
+    color: #fff;
+}
+
+.sidebar-menu .nav-link.active {
+    background-color: #007bff;
+    font-weight: bold;
+}
+
 .icon {
-    padding: 5px;
+    margin-right: 10px;
+    font-size: 1.25rem;
+}
+
+/* Main content styles */
+main {
+    margin-left: 220px;
+    padding: 80px 20px 20px 20px; /* Add top padding to compensate for the fixed header */
+}
+
+.content-wrapper {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 768px) {
+    #sidebar {
+        display: none; /* Hide sidebar on smaller screens */
+    }
+
+    main {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .header {
+        font-size: 1.25rem;
+    }
+
+    button.btn-outline-danger {
+        font-size: 0.875rem;
+    }
+
+    .sidebar-title {
+        font-size: 1rem;
+    }
 }
