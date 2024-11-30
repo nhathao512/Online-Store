@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'user-profile',
@@ -97,9 +98,15 @@ export class UserProfileComponent extends BaseComponent implements OnInit {
       this.userService.updateUserDetail(this.token, updateUserDTO)
         .subscribe({
           next: (response: any) => {
-            this.userService.removeUserFromLocalStorage();
-            this.tokenService.removeToken();
-            this.router.navigate(['/login']);
+            // this.userService.removeUserFromLocalStorage();
+            // this.tokenService.removeToken();
+            // this.router.navigate(['/login']);
+            Swal.fire({
+              icon: 'success',
+              title: 'Updated information successfully!',
+              text: 'The information has been updated.',
+            });
+
           },
           error: (error: HttpErrorResponse) => {
             debugger;
