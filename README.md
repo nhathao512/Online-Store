@@ -1,6 +1,6 @@
 # 🛒ONLINE STORE
 
-<p>This is a React (Frontend) and Node.js (Backend) application using Redis and MongoDB, deployed with Docker Swarm to provide load balancing and high availability.</p>
+<p>This is an Angular (Frontend) and Java Spring Boot (Backend) application using Docker and MySQL.</p>
 
 ## Prerequisites
 
