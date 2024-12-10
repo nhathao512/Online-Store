@@ -1,28 +1,45 @@
-# 🧑‍💻Subject: Java Technology
+# 🛒ONLINE STORE
 
-## Final-Java-ShopApp 
+<p>This is an Angular (Frontend) and Java Spring Boot (Backend) application using Docker and MySQL.</p>
 
-<p>Được triển khai với Java Spring, Java Security, Angular, Docker</p>
+## Prerequisites
 
-> __Cách Chạy Angular__
-<p>1. npm install -g yarn (này là tải yarn)</p>
-<p>2. yarn install (tải package)</p>
-<p>3.1 yarn start</p>
+<li>Java JDK 8 or higher</li>
+<li>MySQL Server</li>
+<li>IntelliJ IDEA</li>
+<li>Docker</li>
+<li>Visual Studio Code</li>
 
-http://localhost:4200/
+## Running the Application
 
-<p>3.2 yarn start:dev (nên dùng)</p>
+> First clone the project: https://github.com/nhathao512/Final-Java-ShopApp.git
 
-http://localhost:4300/
+> For the Frontend
 
-> __Chú ý__
-<p> Mỗi lần pull lên nhớ xóa file node_modules</p>
+* Go to the shopapp-angular folder: cd shopapp-angular
+* Download yarn: npm install -g yarn
+* Download the package: yarn install
+* Run: yarn start:dev
 
-> __Mở phpMyadmin__
+> For the Backend
 
-http://localhost:8100/
+* Open "cmd" and navigate to the Final-Java-ShopApp folder
+* Paste the commands in the following order:
+* docker-compose -f ./deployment.yaml up -d mysql8-container
+* docker-compose -f ./deployment.yaml up -d phpmyadmin8-container
+* docker-compose -f ./deployment.yaml up -d redis-container
+* docker-compose -f ./kafka-deployment.yaml up -d zookeeper-01
+* docker-compose -f ./kafka-deployment.yaml up -d zookeeper-02
+* docker-compose -f ./kafka-deployment.yaml up -d zookeeper-03
+* docker-compose -f ./kafka-deployment.yaml up -d kafka-broker-01
 
-## Tác giả 
+> Open browser
+* Go to [localhost:8100](https://localhost:8100)
+* username: root
+* password: Abc123456789@
+* Finally import the ShopApp.sql file
+
+## Author
 * [Võ Nhật Hào](https://github.com/nhathao512)
 
 * [Đặng Thành Nhân](https://github.com/nhandang02)
