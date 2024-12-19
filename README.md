@@ -12,7 +12,7 @@
 
 ## Running the Application
 
-> First clone the project: `https://github.com/nhathao512/Final-Java-ShopApp.git`
+> First clone the project: ```https://github.com/nhathao512/Final-Java-ShopApp.git```
 
 > For the Frontend
 
