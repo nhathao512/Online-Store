@@ -1,6 +1,6 @@
 # 🛒ONLINE STORE
 
-<p>This is an Angular (Frontend) and Java Spring Boot (Backend) application using Docker and MySQL.</p>
+<p>This is an Angular (Frontend) and Java Spring Boot (Backend) application using MySQL (Database) and Docker.</p>
 
 ## 🔦Prerequisites
 
