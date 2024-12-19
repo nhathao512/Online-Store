@@ -12,22 +12,43 @@
 
 ## Running the Application
 
-> First clone the project: ```https://github.com/nhathao512/Final-Java-ShopApp.git```
+> First clone the project: 
+<pre>
+    <code id="code">git clone https://github.com/nhathao512/Final-Java-ShopApp.git</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
 
 > For the Frontend
 
 * Go to the shopapp-angular folder: cd shopapp-angular
-* Download yarn: ```npm install -g yarn```
-* Download the package: ```yarn install```
-* Run: ```yarn start:dev```
+* Download yarn: 
+<pre>
+    <code id="code">npm install -g yarn</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
+* Download the package: 
+<pre>
+    <code id="code">yarn install</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
+* Run code:
+<pre>
+    <code id="code">yarn start:dev</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
 
 > For the Backend
 
 * Open `"cmd"` and navigate to `"cd"` the Final-Java-ShopApp folder
 * Paste the commands in the following order:
-* Step 1: `docker-compose -f ./deployment.yaml up -d mysql8-container`
-* Step 2: `docker-compose -f ./deployment.yaml up -d phpmyadmin8-container`
-* Step 3: `docker-compose -f ./deployment.yaml up -d redis-container`
+* Step 1: 
+<pre>
+    <code id="code">docker-compose -f ./deployment.yaml up -d mysql8-container</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
+* Step 2: 
+<pre>
+    <code id="code">docker-compose -f ./deployment.yaml up -d phpmyadmin8-container</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
+* Step 3: 
+<pre>
+    <code id="code">docker-compose -f ./deployment.yaml up -d redis-container</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
 * Step 4: `docker-compose -f ./kafka-deployment.yaml up -d zookeeper-01`
 * Step 5: `docker-compose -f ./kafka-deployment.yaml up -d zookeeper-02`
 * Step 6: `docker-compose -f ./kafka-deployment.yaml up -d zookeeper-03`
@@ -45,3 +66,5 @@
 * [Đặng Thành Nhân](https://github.com/nhandang02)
 
 * [Nguyễn Thành Nhân](https://github.com/thanhnhanzxc)
+
+### Thanks for visting our project! 
