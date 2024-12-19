@@ -4,10 +4,11 @@
 
 ## 🔦Prerequisites
 
-<li>Java JDK 8 or higher</li>
+<li>Java JDK 17 or higher</li>
 <li>MySQL Server</li>
 <li>IntelliJ IDEA</li>
 <li>Docker</li>
+<li>Postman</li>
 <li>Visual Studio Code</li>
 
 ## 💻Running the Application
