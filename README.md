@@ -49,15 +49,33 @@
 <pre>
     <code id="code">docker-compose -f ./deployment.yaml up -d redis-container</code><button class="copy-btn" onclick="copyCode()"></button>
 </pre>
-* Step 4: `docker-compose -f ./kafka-deployment.yaml up -d zookeeper-01`
-* Step 5: `docker-compose -f ./kafka-deployment.yaml up -d zookeeper-02`
-* Step 6: `docker-compose -f ./kafka-deployment.yaml up -d zookeeper-03`
-* Step 7: `docker-compose -f ./kafka-deployment.yaml up -d kafka-broker-01`
+* Step 4:
+<pre>
+    <code id="code">docker-compose -f ./kafka-deployment.yaml up -d zookeeper-01</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
+* Step 5: 
+<pre>
+    <code id="code">docker-compose -f ./kafka-deployment.yaml up -d zookeeper-02</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
+* Step 6: 
+<pre>
+    <code id="code">docker-compose -f ./kafka-deployment.yaml up -d zookeeper-03</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
+* Step 7:
+<pre>
+    <code id="code">docker-compose -f ./kafka-deployment.yaml up -d kafka-broker-01</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
 
 > Open browser
 * Go to [localhost:8100](https://localhost:8100)
-* username: `root`
-* password: `Abc123456789@`
+* username:
+<pre>
+    <code id="code">root</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
+* password: 
+<pre>
+    <code id="code">Abc123456789</code><button class="copy-btn" onclick="copyCode()"></button>
+</pre>
 * Finally import the ShopApp.sql file
 
 ## Author
