@@ -23,7 +23,7 @@
 
 > For the Backend
 
-* Open `"cmd"` and navigate to the Final-Java-ShopApp folder
+* Open `"cmd"` and navigate to `"cd"` the Final-Java-ShopApp folder
 * Paste the commands in the following order:
 * Step 1: `docker-compose -f ./deployment.yaml up -d mysql8-container`
 * Step 2: `docker-compose -f ./deployment.yaml up -d phpmyadmin8-container`
