@@ -77,7 +77,7 @@
 <pre>
     <code id="code">Abc123456789</code><button class="copy-btn" onclick="copyCode()"></button>
 </pre>
-* Finally import the ShopApp.sql file
+* Finally import the `ShopApp.sql` file
 
 ## 🧑‍💻Author
 * [Võ Nhật Hào](https://github.com/nhathao512)
