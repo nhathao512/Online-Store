@@ -79,6 +79,11 @@
 </pre>
 * Finally import the `ShopApp.sql` file
 
+## Demo Video
+A walkthrough of the application can be accessed via the following link:
+[Demo Video](https://www.youtube.com/live/42gNaysrR_8)
+
+
 ## 🧑‍💻Author
 * [Võ Nhật Hào](https://github.com/nhathao512)
 
