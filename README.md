@@ -93,4 +93,6 @@ This project is licensed under the [License](LICENSE.md).
 
 * [Nguyễn Thành Nhân](https://github.com/thanhnhanzxc)
 
+---
+
 ### Thanks for visting our project ❤️! 
