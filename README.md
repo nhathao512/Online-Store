@@ -1,9 +1,11 @@
 # 🛒ONLINE STORE
 
-<p>This is an Angular (Frontend) and Java Spring Boot (Backend) application using MySQL (Database) and Docker.</p>
+<p>This project is a web application that leverages Angular for the frontend, Java Spring Boot for the backend, MySQL for the database, and Docker for containerization. It provides a robust and scalable solution for building modern web applications.</p>
 
 ## 🔦Prerequisites
 
+<li>NodeJs</li>
+<li>Angular</li>
 <li>Java JDK 17 or higher</li>
 <li>MySQL Server</li>
 <li>IntelliJ IDEA</li>
