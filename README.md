@@ -36,7 +36,7 @@
 
 > For the Backend
 
-* Open `"cmd"` and navigate to `"cd"` the Final-Java-ShopApp folder
+* Open `"cmd"` and navigate to `"cd"` the Online-Store folder
 * Paste the commands in the following order:
 * Step 1: 
 <pre>
