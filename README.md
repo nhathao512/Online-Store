@@ -15,7 +15,7 @@
 
 > First clone the project: 
 <pre>
-    <code id="code">https://github.com/nhathao512/E-commerce.git</code><button class="copy-btn" onclick="copyCode()"></button>
+    <code id="code">https://github.com/nhathao512/Online-Store.git</code><button class="copy-btn" onclick="copyCode()"></button>
 </pre>
 
 > For the Frontend
