@@ -70,7 +70,7 @@ spring:
           facebook:
             client-id: 1105718268222089
             client-secret: 82cfe8a895d8b9e0601ccccd89305aa2
-            redirect-uri: "${FACEBOOK_REDIRECT_URI:http://localhost:4300/auth/facebook/callback}" #sau khi user đăng nhập google thành công sẽ tự redirect đến trang này kèm code(của fb)
+            redirect-uri: "${FACEBOOK_REDIRECT_URI:http://localhost:4300/auth/facebook/callback}" #sau khi user đăng nhập facebook thành công sẽ tự redirect đến trang này kèm code(của fb)
             auth-uri: https://www.facebook.com/v21.0/dialog/oauth
             token-uri: https://graph.facebook.com/oauth/access_token
             user-info-uri: https://graph.facebook.com/me?fields=id,name,email,picture.type(large)

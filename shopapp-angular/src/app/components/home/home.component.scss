@@ -79,6 +79,7 @@ $background-color-dark: #333; // Màu tối cho tiêu đề và văn bản
 .container {
     margin-top: 50px;
     background-color: $background-color-light; /* Nền sáng giống Shopee */
+    min-height: 100vh;
 }
 
 // Header Styling
