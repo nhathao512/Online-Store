@@ -77,7 +77,7 @@
 </pre>
 * password: 
 <pre>
-    <code id="code">Abc123456789</code><button class="copy-btn" onclick="copyCode()"></button>
+    <code id="code">Abc123456789@</code><button class="copy-btn" onclick="copyCode()"></button>
 </pre>
 * Finally import the `ShopApp.sql` file
 
