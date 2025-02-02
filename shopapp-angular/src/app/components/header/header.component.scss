@@ -1,66 +1,108 @@
-@import '../../styles/shared-styles.scss';
+@import "../../styles/shared-styles.scss";
 
 header {
-    background-color: #FFF8E7;
-    color: rgb(173, 178, 203);
-    position: fixed;
-    top: 0; 
-    left: 0; /* Đặt header ở phía bên trái */
-    width: 100%;
+  background-color: #fff8e7;
+  color: rgb(173, 178, 203);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .navbar {
-    background-color: rgba(0, 0, 0, 0) !important;
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .navbar .container {
-    background-color: rgba(0, 0, 0, 0) !important;
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .navbar .container .navbar-brand {
-    color: #000000;
+  color: #000000;
 }
 
 .navbar .container .navbar-nav .nav-link {
-    color: #000000   ;
-    border-radius: 18px;
-    padding: 8px 16px;
-    cursor: pointer;
+  color: #000000;
+  border-radius: 18px;
+  padding: 8px 16px;
+  cursor: pointer;
+  
 }
 
 .navbar .container .navbar-nav .nav-link.active {
-    background-color: $shopapp-color !important;
-    color: black !important;
+  background-color: $shopapp-color !important;
+  color: black !important;
 }
+
 .nav-item.active {
-    background-color: $shopapp-color !important;
-    color: white !important;
+  background-color: $shopapp-color !important;
+  color: white !important;
 }
 
-/* Add this CSS to your project's stylesheet */
+/* User profile styling */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 15px;
 
+  span {
+    margin-left: 8px;
+  }
+}
+
+.profile-image {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Popover styling */
 .popover-list {
-    padding: 0px 10px 0px 10px;
-    cursor: pointer;
-}
-.popover-body {
-    padding: 0px;
-}
-.popover-item {
-    display: block;
-    margin-bottom: 5px;
-    text-decoration: none;
-    color: #333;
+  padding: 8px;
+  min-width: 150px;
 }
 
-.popover-item:hover {
+.popover-body {
+  padding: 0;
+}
+
+.popover-item {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
     background-color: #f0f0f0;
-    color: #E74C3C;    
+    color: #e74c3c;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 4px;
+  }
 }
 
 .divider {
-    height: 2px; /* Độ dày của đường */
-    // background-color: #FF6F00; /* Màu cam */
-    width: 100%; /* Chiều rộng đầy đủ */
-    box-shadow: 0 4px 8px #cfc9c4;
+  height: 2px;
+  width: 100%;
+  box-shadow: 0 4px 8px #cfc9c4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .user-profile {
+    padding: 5px 10px;
+  }
+
+  .profile-image {
+    width: 28px;
+    height: 28px;
+  }
 }

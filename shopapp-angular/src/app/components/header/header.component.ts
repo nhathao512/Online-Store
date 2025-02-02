@@ -19,10 +19,30 @@ import { BaseComponent } from '../base/base.component';
 export class HeaderComponent extends BaseComponent implements OnInit {
   userResponse?: UserResponse | null;
   isPopoverOpen = false;
-  activeNavItem: number = 0;
+  activeNavItem: string = 'home';
+  baseImageUrl: string = 'http://localhost:8088/api/v1/users/profile-images/';
 
   ngOnInit() {
     this.userResponse = this.userService.getUserResponseFromLocalStorage();
+    // Set active item based on current route
+    const currentPath = this.router.url;
+    if (currentPath.includes('/orders')) {
+      this.activeNavItem = 'cart';
+    } else {
+      this.activeNavItem = 'home';
+    }
+  }
+
+  getProfileImageUrl(): string {
+    if (this.userResponse?.profile_image) {
+      // Nếu là URL từ Google/Facebook
+      if (this.userResponse.profile_image.startsWith('http')) {
+        return this.userResponse.profile_image;
+      }
+      // Nếu là filename từ server
+      return `${this.baseImageUrl}${this.userResponse.profile_image}`;
+    }
+    return 'assets/images/default-avatar.png';
   }
 
   togglePopover(event: Event): void {
@@ -32,27 +52,21 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 
   handleItemClick(index: number): void {
     if (index === 0) {
-      debugger
       this.router.navigate(['/user-profile']);
     }
-
-    else if(index === 1){
-      //   debugger
-        this.router.navigate([`/manage-orders`]);
+    else if(index === 1) {
+      this.router.navigate(['/manage-orders']);
     } 
-
     else if (index === 2) {
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();
       this.userResponse = this.userService.getUserResponseFromLocalStorage();
-      this.router.navigate([`/login`]);
+      this.router.navigate(['/login']);
     }
-    this.isPopoverOpen = false; // Close the popover after clicking an item 
-}
+    this.isPopoverOpen = false;
+  }
 
-
-  setActiveNavItem(index: number) {
-    this.activeNavItem = index;
-    //console.error(this.activeNavItem);
+  setActiveNavItem(item: string) {
+    this.activeNavItem = item;
   }
 }
