@@ -23,6 +23,8 @@ import { BaseComponent } from '../base/base.component';
     FormsModule
   ]
 })
+
+
 export class HomeComponent extends BaseComponent implements OnInit {
   products: Product[] = [];
   categories: Category[] = []; // Dữ liệu động từ categoryService

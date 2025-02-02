@@ -332,3 +332,24 @@ app-header {
     max-height: 400px;
     overflow-y: auto;
 }
+
+.carousel-item {
+    transition: opacity 0.5s ease-in-out; /* Hiệu ứng chuyển đổi mượt mà */
+    opacity: 0; /* Ẩn tất cả các item ban đầu */
+}
+
+.carousel-item:not(.active) {
+    opacity: 0; /* Ẩn các item không active */
+    display: none; /* Ẩn hoàn toàn các item không active */
+}
+
+.carousel-item.active {
+    opacity: 1; /* Hiển thị item active */
+    display: block; /* Hiển thị item active */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
