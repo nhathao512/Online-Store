@@ -5,7 +5,7 @@ export interface UserResponse {
     fullname: string;
     phone_number: string;
     address: string;
-    profile_image: string; // Thêm trường này
+    profile_image: string; 
     is_active: boolean;
     date_of_birth: Date;
     facebook_account_id: string;

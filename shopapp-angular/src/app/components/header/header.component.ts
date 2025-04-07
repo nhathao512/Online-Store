@@ -10,11 +10,7 @@ import { BaseComponent } from '../base/base.component';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    NgbModule,
-    RouterModule
-  ]
+  imports: [CommonModule, NgbModule, RouterModule],
 })
 export class HeaderComponent extends BaseComponent implements OnInit {
   userResponse?: UserResponse | null;
@@ -42,7 +38,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
       // Nếu là filename từ server
       return `${this.baseImageUrl}${this.userResponse.profile_image}`;
     }
-    return 'assets/images/default-avatar.png';
+    return '../assets/images/default-avatar.png';
   }
 
   togglePopover(event: Event): void {
@@ -53,11 +49,9 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   handleItemClick(index: number): void {
     if (index === 0) {
       this.router.navigate(['/user-profile']);
-    }
-    else if(index === 1) {
+    } else if (index === 1) {
       this.router.navigate(['/manage-orders']);
-    } 
-    else if (index === 2) {
+    } else if (index === 2) {
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();
       this.userResponse = this.userService.getUserResponseFromLocalStorage();
