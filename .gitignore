@@ -1,0 +1,4 @@
+.vscode
+redis-data/
+.hintrc
+.DS_Store
