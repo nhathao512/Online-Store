@@ -1,8 +1,8 @@
-# 🛒ONLINE STORE
+# ONLINE STORE
 
 <p>This project is a web application that leverages Angular for the frontend, Java Spring Boot for the backend, MySQL for the database, and Docker for containerization. It provides a robust and scalable solution for building modern web applications.</p>
 
-## 🔦Prerequisites
+## Prerequisites
 
 <li>NodeJs</li>
 <li>Angular</li>
@@ -13,7 +13,7 @@
 <li>Postman</li>
 <li>Visual Studio Code</li>
 
-## 💻Running the Application
+## Running the Application
 
 > First clone the project: 
 <pre>
@@ -81,14 +81,14 @@
 </pre>
 * Finally import the `ShopApp.sql` file
 
-## 📹Demo Video
+## Demo Video
 A walkthrough of the application can be accessed via the following link:
 [Demo Video](https://www.youtube.com/live/42gNaysrR_8)
 
-## ⚖️ License
+## License
 This project is licensed under the [License](LICENSE.md).
 
-## 🧑‍💻Author
+## Author
 * [Võ Nhật Hào](https://github.com/nhathao512)
 
 * [Đặng Thành Nhân](https://github.com/nhandang02)
