@@ -7,7 +7,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeReque
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
-public class AuthService implements IAuthService{
+public class AuthService implements IAuthService {
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
     private String googleClientId;
 
@@ -65,8 +64,9 @@ public class AuthService implements IAuthService{
             url = urlBuilder.build();
         } else if ("facebook".equals(loginType)) {
             /*
-            url = String.format("https://www.facebook.com/v3.2/dialog/oauth?client_id=%s&redirect_uri=%s&scope=email,public_profile&response_type=code",
-                    facebookClientId, facebookRedirectUri);
+             * url = String.format(
+             * "https://www.facebook.com/v3.2/dialog/oauth?client_id=%s&redirect_uri=%s&scope=email,public_profile&response_type=code",
+             * facebookClientId, facebookRedirectUri);
              */
             url = UriComponentsBuilder
                     .fromUriString(facebookAuthUri)
@@ -80,11 +80,12 @@ public class AuthService implements IAuthService{
 
         return url;
     }
+
     public Map<String, Object> authenticateAndFetchProfile(String code, String loginType) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         String accessToken;
-        //Gson gson = new Gson();
+        // Gson gson = new Gson();
 
         switch (loginType.toLowerCase()) {
             case "google":
@@ -93,10 +94,10 @@ public class AuthService implements IAuthService{
                         googleClientId,
                         googleClientSecret,
                         code,
-                        googleRedirectUri
-                ).execute().getAccessToken();
+                        googleRedirectUri).execute().getAccessToken();
 
-                // Configure RestTemplate to include the access token in the Authorization header
+                // Configure RestTemplate to include the access token in the Authorization
+                // header
                 restTemplate.getInterceptors().add((req, body, executionContext) -> {
                     req.getHeaders().set("Authorization", "Bearer " + accessToken);
                     return executionContext.execute(req, body);
@@ -104,9 +105,10 @@ public class AuthService implements IAuthService{
 
                 // Make a GET request to fetch user information
                 return new ObjectMapper().readValue(
-                    restTemplate.getForEntity(googleUserInfoUri, String.class).getBody(),
-                    new TypeReference<>() {});
-                //break;
+                        restTemplate.getForEntity(googleUserInfoUri, String.class).getBody(),
+                        new TypeReference<>() {
+                        });
+            // break;
 
             case "facebook":
                 // Facebook token request setup
@@ -129,8 +131,9 @@ public class AuthService implements IAuthService{
                 String userInfoUri = facebookUserInfoUri + "&access_token=" + accessToken;
                 return mapper.readValue(
                         restTemplate.getForEntity(userInfoUri, String.class).getBody(),
-                        new TypeReference<>() {});
-                //break;
+                        new TypeReference<>() {
+                        });
+            // break;
 
             default:
                 System.out.println("Unsupported login type: " + loginType);

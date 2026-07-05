@@ -1,4 +1,5 @@
 package com.project.shopapp.responses.order;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.shopapp.models.Order;
@@ -66,7 +67,7 @@ public class OrderResponse {
         List<OrderDetailResponse> orderDetailResponses = orderDetails
                 .stream()
                 .map(orderDetail -> OrderDetailResponse.fromOrderDetail(orderDetail)).toList();
-        OrderResponse orderResponse =  OrderResponse
+        OrderResponse orderResponse = OrderResponse
                 .builder()
                 .id(order.getId())
                 .userId(order.getUser().getId())
@@ -82,7 +83,7 @@ public class OrderResponse {
                 .shippingAddress(order.getShippingAddress())
                 .shippingDate(order.getShippingDate())
                 .paymentMethod(order.getPaymentMethod())
-                .orderDetails(orderDetailResponses) //important
+                .orderDetails(orderDetailResponses) // important
                 .build();
         return orderResponse;
     }

@@ -1,14 +1,9 @@
 package com.project.shopapp.components;
 
 import com.project.shopapp.models.Category;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Component

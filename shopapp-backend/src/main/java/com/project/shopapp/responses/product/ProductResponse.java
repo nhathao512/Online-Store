@@ -9,7 +9,6 @@ import com.project.shopapp.responses.BaseResponse;
 import com.project.shopapp.responses.comment.CommentResponse;
 import com.project.shopapp.responses.favorite.FavoriteResponse;
 import lombok.*;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -40,10 +39,12 @@ public class ProductResponse extends BaseResponse {
 
     @JsonProperty("category_id")
     private Long categoryId;
+
     public static ProductResponse fromProduct(Product product) {
         List<Comment> comments = product.getComments()
                 .stream()
-                .sorted(Comparator.comparing(Comment::getCreatedAt).reversed()) // Sort comments by createdAt in descending order
+                .sorted(Comparator.comparing(Comment::getCreatedAt).reversed()) // Sort comments by createdAt in
+                                                                                // descending order
                 .collect(Collectors.toList());
         List<Favorite> favorites = product.getFavorites();
         ProductResponse productResponse = ProductResponse.builder()
@@ -51,7 +52,8 @@ public class ProductResponse extends BaseResponse {
                 .name(product.getName())
                 .price(product.getPrice())
                 .thumbnail(product.getThumbnail())
-                .comments(comments.stream().map(CommentResponse::fromComment).toList()) // Collect sorted comments into a list
+                .comments(comments.stream().map(CommentResponse::fromComment).toList()) // Collect sorted comments into
+                                                                                        // a list
                 .favorites(favorites.stream().map(FavoriteResponse::fromFavorite).toList())
                 .description(product.getDescription())
                 .categoryId(product.getCategory().getId())

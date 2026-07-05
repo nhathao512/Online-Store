@@ -5,26 +5,22 @@ import com.project.shopapp.exceptions.DataNotFoundException;
 import com.project.shopapp.exceptions.ExpiredTokenException;
 import com.project.shopapp.models.Token;
 import com.project.shopapp.models.User;
-import com.project.shopapp.repositories.CategoryRepository;
-import com.project.shopapp.repositories.RoleRepository;
 import com.project.shopapp.repositories.TokenRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class TokenService implements ITokenService{
+public class TokenService implements ITokenService {
     private static final int MAX_TOKENS = 3;
     @Value("${jwt.expiration}")
-    private int expiration; //save to an environment variable
+    private int expiration; // save to an environment variable
 
     @Value("${jwt.expiration-refresh-token}")
     private int expirationRefreshToken;
@@ -34,12 +30,12 @@ public class TokenService implements ITokenService{
 
     @Transactional
     @Override
-    public Token refreshToken(String refreshToken, User user) throws Exception{
+    public Token refreshToken(String refreshToken, User user) throws Exception {
         Token existingToken = tokenRepository.findByRefreshToken(refreshToken);
-        if(existingToken == null) {
+        if (existingToken == null) {
             throw new DataNotFoundException("Refresh token does not exist");
         }
-        if(existingToken.getRefreshExpirationDate().compareTo(LocalDateTime.now()) < 0){
+        if (existingToken.getRefreshExpirationDate().compareTo(LocalDateTime.now()) < 0) {
             tokenRepository.delete(existingToken);
             throw new ExpiredTokenException("Refresh token is expired");
         }
@@ -51,15 +47,16 @@ public class TokenService implements ITokenService{
         existingToken.setRefreshExpirationDate(LocalDateTime.now().plusSeconds(expirationRefreshToken));
         return existingToken;
     }
+
     @Transactional
     @Override
-    public Token addToken(User user,String token, boolean isMobileDevice) {
+    public Token addToken(User user, String token, boolean isMobileDevice) {
         List<Token> userTokens = tokenRepository.findByUser(user);
         int tokenCount = userTokens.size();
         // Số lượng token vượt quá giới hạn, xóa một token cũ
         if (tokenCount >= MAX_TOKENS) {
-            //kiểm tra xem trong danh sách userTokens có tồn tại ít nhất
-            //một token không phải là thiết bị di động (non-mobile)
+            // kiểm tra xem trong danh sách userTokens có tồn tại ít nhất
+            // một token không phải là thiết bị di động (non-mobile)
             boolean hasNonMobileToken = !userTokens.stream().allMatch(Token::isMobile);
             Token tokenToDelete;
             if (hasNonMobileToken) {
@@ -68,8 +65,8 @@ public class TokenService implements ITokenService{
                         .findFirst()
                         .orElse(userTokens.get(0));
             } else {
-                //tất cả các token đều là thiết bị di động,
-                //chúng ta sẽ xóa token đầu tiên trong danh sách
+                // tất cả các token đều là thiết bị di động,
+                // chúng ta sẽ xóa token đầu tiên trong danh sách
                 tokenToDelete = userTokens.get(0);
             }
             tokenRepository.delete(tokenToDelete);

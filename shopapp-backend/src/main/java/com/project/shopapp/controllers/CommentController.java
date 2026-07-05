@@ -1,18 +1,15 @@
 package com.project.shopapp.controllers;
-import com.github.javafaker.Faker;
 import com.project.shopapp.components.SecurityUtils;
 import com.project.shopapp.dtos.*;
 import com.project.shopapp.models.User;
 import com.project.shopapp.responses.ResponseObject;
 import com.project.shopapp.responses.comment.CommentResponse;
 import com.project.shopapp.services.comment.CommentService;
-import com.project.shopapp.services.product.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

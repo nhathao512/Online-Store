@@ -1,9 +1,7 @@
 package com.project.shopapp.services.comment;
 
 import com.github.javafaker.Faker;
-import com.project.shopapp.controllers.ProductController;
 import com.project.shopapp.dtos.CommentDTO;
-import com.project.shopapp.dtos.ProductDTO;
 import com.project.shopapp.exceptions.DataNotFoundException;
 import com.project.shopapp.models.*;
 import com.project.shopapp.models.Comment;
@@ -27,11 +25,12 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class CommentService implements ICommentService{
+public class CommentService implements ICommentService {
     private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+
     @Override
     @Transactional
     public Comment insertComment(CommentDTO commentDTO) {
@@ -80,12 +79,12 @@ public class CommentService implements ICommentService{
     }
 
     @Override
-    //@Transactional
+    // @Transactional
     public void generateFakeComments() throws Exception {
         Faker faker = new Faker();
         Random random = new Random();
         // Get all users with roleId = 1
-        //List<User> users = userRepository.findByRoleId(1L);
+        // List<User> users = userRepository.findByRoleId(1L);
         List<User> users = userRepository.findAll();
         // Get all products
         List<Product> products = productRepository.findAll();
@@ -113,7 +112,7 @@ public class CommentService implements ICommentService{
             comment.setCreatedAt(LocalDateTime.ofEpochSecond(randomEpoch, 0, ZoneOffset.UTC));
             // Save the comment
             comments.add(comment);
-            if(comments.size() >= batchSize) {
+            if (comments.size() >= batchSize) {
                 commentRepository.saveAll(comments);
                 comments.clear();
             }
