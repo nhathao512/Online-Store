@@ -1,4 +1,27 @@
+# IDE & Editor
 .vscode
-redis-data/
-.hintrc
+.idea/
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Redis data
+redis-data/
+
+# Hint configs
+.hintrc
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Backup files
+*.backup
+*.bak
+*.orig
